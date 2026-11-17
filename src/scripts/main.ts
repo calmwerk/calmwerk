@@ -63,7 +63,29 @@ function initYear(): void {
   });
 }
 
+/** Schlagwörter (<mark>) einmal einlaufen lassen, sobald sie zu sehen sind. */
+function initMarks(): void {
+  const marks = document.querySelectorAll('mark');
+  if (marks.length === 0) return;
+  if (!('IntersectionObserver' in window)) {
+    marks.forEach((mark) => mark.classList.add('is-marked'));
+    return;
+  }
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-marked');
+        observer.unobserve(entry.target);
+      });
+    },
+    { rootMargin: '0px 0px -15% 0px', threshold: 0.6 },
+  );
+  marks.forEach((mark) => observer.observe(mark));
+}
+
 initMenu();
 initHeader();
 initCopyButtons();
 initYear();
+initMarks();
