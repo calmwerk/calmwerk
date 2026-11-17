@@ -1,77 +1,101 @@
 /**
- * Zentrale Inhalte der Website. Preise, Pakete und Kontaktdaten stehen nur hier –
- * Startseite und strukturierte Daten für Google lesen beide aus dieser Datei.
+ * Zentrale Inhalte der Website. Startseite und strukturierte Daten für Google lesen beide aus dieser Datei.
  */
+
+import { z } from 'astro/zod';
+import firmaJson from '../content/einstellungen/firma.json';
+import preiseJson from '../content/einstellungen/preise.json';
+import startseiteJson from '../content/einstellungen/startseite.json';
+
+/*
+ * Inhalte, die im CMS (/admin/) gepflegt werden, liegen als JSON in src/content/einstellungen/.
+ * Hier werden sie beim Build geprüft – ein Tippfehler im CMS bricht den Build mit klarer Meldung ab,
+ * statt eine kaputte Seite zu veröffentlichen.
+ */
+
+const firma = z
+  .object({
+    email: z.email(),
+    telefon: z.string().regex(/^\+?[\d\s/()-]+$/, 'Telefonnummer nur mit Ziffern, Leerzeichen, +, -, /'),
+    strasse: z.string().min(1),
+    plz: z.string().regex(/^\d{5}$/, 'Postleitzahl mit fünf Ziffern'),
+    ort: z.string().min(1),
+    region: z.array(z.string().min(1)).min(1),
+  })
+  .parse(firmaJson);
+
+const paketSchema = z.object({
+  name: z.string().min(1),
+  inhalt: z.string().min(1),
+  dauer: z.string().min(1),
+  /** Preis in Euro. */
+  preis: z.number().int().nonnegative(),
+  /** true = „ab“-Preis. */
+  ab: z.boolean(),
+});
+
+const betreuungSchema = z.object({
+  name: z.string().min(1),
+  /** Preis pro Monat in Euro. */
+  preis: z.number().int().nonnegative(),
+  ab: z.boolean(),
+  text: z.string().min(1),
+});
+
+const preise = z
+  .object({
+    pakete: z.array(paketSchema).min(1),
+    betreuung: z.array(betreuungSchema),
+    hinweis: z.string(),
+  })
+  .parse(preiseJson);
+
+export const startseite = z
+  .object({
+    referenzenIntro: z.string().min(1),
+    /** Teil des Intros, der wie mit der Maus markiert erscheint (leer = keine Markierung). */
+    referenzenMarkierung: z.string().default(''),
+  })
+  .parse(startseiteJson);
+
+export type Paket = z.infer<typeof paketSchema>;
+export type Betreuung = z.infer<typeof betreuungSchema>;
+
+export const pakete: Paket[] = preise.pakete;
+export const betreuung: Betreuung[] = preise.betreuung;
+export const zahlungshinweis = preise.hinweis;
 
 export const site = {
   name: 'Calmwerk',
   legalName: 'Calmwerk – Philipp Kremer',
-  url: 'https://calmwerk.de',
   claim: 'Digitale Systeme, die ruhig laufen.',
   description:
     'Calmwerk baut digitale Systeme für kleine und mittlere Unternehmen in Karlsruhe: Website oder Shop als Fundament, darauf Automatisierung und KI. Festpreis, 3–4 Wochen, ein Ansprechpartner.',
   shortDescription:
     'Websites, Shops und Automatisierung für kleine und mittlere Unternehmen in Karlsruhe. Festpreis, 3–4 Wochen, ein Ansprechpartner.',
-  email: 'philipp@calmwerk.de',
+  email: firma.email,
   /** Anzeige im Impressum. */
-  phone: '+49 163 7285172',
-  /** Für Links und strukturierte Daten (E.164). */
-  phoneE164: '+491637285172',
+  phone: firma.telefon,
+  /** Für strukturierte Daten (E.164), aus der Anzeige abgeleitet: „+49 163 …“ → „+49163…“. */
+  phoneE164: firma.telefon.replace(/[^\d+]/g, '').replace(/^0/, '+49'),
   founder: {
     name: 'Philipp Kremer',
     jobTitle: 'Gründer',
     credentials: ['GitHub Foundations', 'Claude Certified Architect'],
   },
   address: {
-    locality: 'Karlsruhe',
+    street: firma.strasse,
+    postalCode: firma.plz,
+    locality: firma.ort,
     region: 'Baden-Württemberg',
     country: 'DE',
-    street: 'Keßlaustraße 28',
-    postalCode: '76187',
   },
-  areaServed: ['Karlsruhe', 'Ettlingen', 'Südpfalz'],
+  areaServed: firma.region,
   /** Pfad relativ zur Website. */
   ogImage: 'assets/img/og-image.png',
   ogImageAlt: 'Calmwerk Logo auf dunklem Grund',
   themeColor: '#F3F3F0',
 } as const;
-
-export interface Paket {
-  name: string;
-  inhalt: string;
-  dauer: string;
-  /** Nettopreis in Euro. */
-  preis: number;
-  /** true = „ab“-Preis. */
-  ab: boolean;
-}
-
-export const pakete: Paket[] = [
-  { name: 'Start-Website', inhalt: 'Onepager oder kleine Website bis 5 Seiten, Domain, E-Mail, einfach selbst zu pflegen', dauer: '1–2 Wochen', preis: 1490, ab: true },
-  { name: 'Business-Website', inhalt: 'Konzept, Design nach Ihrem Erscheinungsbild, bis 15 Seiten, Suchmaschinen-Grundlagen, auf Anfragen optimiert', dauer: '3–4 Wochen', preis: 2900, ab: true },
-  { name: 'Shopify-Shop', inhalt: 'Einrichtung, eigenes Theme, Zahlung, Versand, Einbindung der Rechtstexte', dauer: '3–4 Wochen', preis: 3490, ab: true },
-  { name: 'Automatisierung', inhalt: 'Ein Ablauf analysiert und automatisiert, zum Beispiel Anfrage → Kundenliste → Antwortmail', dauer: '1–2 Wochen', preis: 990, ab: true },
-  { name: 'KI-Assistent', inhalt: 'Internes Dashboard mit Anbindung an Mail, Kalender und Daten; KI für Routineaufgaben', dauer: '4–6 Wochen', preis: 3900, ab: true },
-  { name: 'Digital-Check', inhalt: 'Analyse Ihres Auftritts mit Befundliste und Maßnahmenplan; wird bei Auftrag angerechnet', dauer: '1 Tag', preis: 290, ab: false },
-];
-
-export interface Betreuung {
-  name: string;
-  /** Nettopreis pro Monat in Euro. */
-  preis: number;
-  ab: boolean;
-  text: string;
-}
-
-export const betreuung: Betreuung[] = [
-  { name: 'Care', preis: 49, ab: false, text: 'Überwachung, Updates, Backups, Sicherheit, kleine Änderungen bis 30 Minuten.' },
-  { name: 'Care Plus', preis: 149, ab: false, text: 'Wie Care, dazu zwei Stunden Änderungen und Pflege Ihres Shops.' },
-  { name: 'Growth', preis: 390, ab: false, text: 'Monatliche Auswertung, Optimierung für Suche und Anfragen, vier Stunden Weiterentwicklung.' },
-  { name: 'Automation Care', preis: 99, ab: true, text: 'Betrieb und Anpassung Ihrer Automatisierungen, KI-Kosten transparent.' },
-];
-
-export const zahlungshinweis =
-  'Alle Preise netto. Zahlung: 50 % bei Auftrag, 50 % bei Abnahme. Betreuung monatlich kündbar.';
 
 export interface Schicht {
   nummer: number;

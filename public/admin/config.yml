@@ -1,0 +1,98 @@
+# Sveltia CMS – Inhalte der Calmwerk-Website.
+# Anmelden: /admin/ öffnen → „Sign In with Token“ → GitHub-Token mit Contents: Read and write für calmwerk/calmwerk.
+# Jede gespeicherte Änderung ist ein Commit auf main; der Workflow veröffentlicht die Seite danach automatisch (ca. 1 Minute).
+backend:
+  name: github
+  repo: calmwerk/calmwerk
+  branch: main
+  commit_messages:
+    create: 'docs: add {{collection}} "{{slug}}"'
+    update: 'docs: update {{collection}} "{{slug}}"'
+    delete: 'docs: remove {{collection}} "{{slug}}"'
+    uploadMedia: 'docs: upload "{{path}}"'
+    deleteMedia: 'docs: remove "{{path}}"'
+
+media_folder: public/assets/img
+public_folder: /assets/img
+
+output:
+  omit_empty_optional_fields: true
+
+collections:
+  - name: referenzen
+    label: Referenzen
+    label_singular: Referenz
+    description: Projekte im Abschnitt „Referenzen“ auf der Startseite. „Sichtbar“ ausschalten, um eine Referenz auszublenden.
+    folder: src/content/referenzen
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    slug: '{{title}}'
+    identifier_field: title
+    summary: '{{order}} · {{title}} ({{branche}}, {{ort}})'
+    sortable_fields: [order, title]
+    # Bilder liegen in src/assets, damit Astro sie verkleinert und als WebP ausliefert.
+    media_folder: /src/assets/referenzen
+    public_folder: ../../assets/referenzen
+    fields:
+      - { name: title, label: Projektname }
+      - { name: branche, label: Branche, hint: 'z. B. Modelabel' }
+      - { name: ort, label: Ort }
+      - { name: order, label: Reihenfolge, widget: number, value_type: int, min: 1, hint: 'Kleinere Zahl steht weiter oben.' }
+      - { name: published, label: Sichtbar, widget: boolean, default: true }
+      - { name: image, label: Bild, widget: image, hint: 'Querformat, mindestens 1400 px breit (Desktop und Smartphone nebeneinander).' }
+      - { name: imageAlt, label: Bildbeschreibung, hint: 'Was ist auf dem Bild zu sehen? Für Screenreader und Google.' }
+      - { name: umfang, label: Umfang }
+      - { name: fokus, label: Fokus }
+      - { name: body, label: Beschreibung, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+
+  - name: einstellungen
+    label: Einstellungen
+    description: Preise, Kontaktdaten und Texte der Startseite.
+    files:
+      - name: preise
+        label: Preise und Pakete
+        file: src/content/einstellungen/preise.json
+        fields:
+          - name: pakete
+            label: Pakete
+            label_singular: Paket
+            widget: list
+            summary: '{{name}} – {{preis}} €'
+            fields:
+              - { name: name, label: Name }
+              - { name: inhalt, label: Inhalt, widget: text }
+              - { name: dauer, label: Dauer, hint: 'z. B. 3–4 Wochen' }
+              - { name: preis, label: Preis in Euro, widget: number, value_type: int, min: 0 }
+              - { name: ab, label: '„ab“ vor dem Preis', widget: boolean, default: true }
+          - name: betreuung
+            label: Betreuung (monatlich)
+            label_singular: Betreuungspaket
+            widget: list
+            summary: '{{name}} – {{preis}} € / Monat'
+            fields:
+              - { name: name, label: Name }
+              - { name: preis, label: Preis pro Monat in Euro, widget: number, value_type: int, min: 0 }
+              - { name: ab, label: '„ab“ vor dem Preis', widget: boolean, default: false }
+              - { name: text, label: Beschreibung, widget: text }
+          - { name: hinweis, label: Hinweis unter den Preisen, widget: text }
+
+      - name: firma
+        label: Kontakt und Anschrift
+        file: src/content/einstellungen/firma.json
+        description: Erscheint im Impressum, in der Datenschutzerklärung, im Kontaktbereich und in den Daten für Google.
+        fields:
+          - { name: email, label: E-Mail }
+          - { name: telefon, label: Telefon, hint: 'z. B. +49 163 1234567' }
+          - { name: strasse, label: Straße und Hausnummer }
+          - { name: plz, label: Postleitzahl }
+          - { name: ort, label: Ort }
+          - { name: region, label: Region, widget: list, hint: 'Orte, in denen Sie arbeiten; erscheinen im Kontaktbereich.' }
+
+      - name: startseite
+        label: Texte der Startseite
+        file: src/content/einstellungen/startseite.json
+        fields:
+          - { name: referenzenIntro, label: Einleitung Referenzen, widget: text }
+          - { name: referenzenMarkierung, label: Markierter Teil der Einleitung, required: false, hint: 'Genau so geschrieben wie in der Einleitung. Leer lassen für keine Markierung.' }
