@@ -1,15 +1,29 @@
 ---
+import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
 import SectionHead from '../SectionHead.astro';
+import MarkedText from '../MarkedText.astro';
 import { fakten, site } from '../../data/site';
+
+const ueber = await getEntry('ueber', 'philipp-kremer');
+if (!ueber) throw new Error('src/content/ueber/philipp-kremer.md fehlt');
+const { foto, fotoAlt, einleitung, text, markierung } = ueber.data;
 ---
 
 <section class="section" id="ueber" aria-labelledby="ueber-title">
   <div class="wrap">
     <SectionHead label="Über mich" titleId="ueber-title">{site.founder.name}, Gründer von {site.name}.</SectionHead>
-    <div class="about">
+    <div class:list={['about', { 'has-portrait': foto }]}>
+      {
+        foto && (
+          <figure class="portrait">
+            <Image src={foto} alt={fotoAlt} widths={[320, 480, 640]} sizes="(max-width: 860px) 240px, 280px" loading="lazy" />
+          </figure>
+        )
+      }
       <div>
-        <p class="lede">Ich bin Fachinformatiker für Anwendungsentwicklung und baue seit acht Jahren Software, zuletzt für Industrie und Logistik.</p>
-        <p class="about-text">Dort habe ich gelernt, wie viel Zeit in Abläufen steckt, die niemand mag: Anfragen sortieren, Termine abstimmen, Daten von A nach B tragen. Mit Calmwerk bringe ich diese Erfahrung zu kleinen und mittleren Unternehmen in der Region. Sie haben einen Ansprechpartner, der zuhört, <mark>ehrlich sagt, was sich lohnt</mark>, und es dann selbst umsetzt.</p>
+        <p class="lede">{einleitung}</p>
+        <p class="about-text"><MarkedText text={text} markierung={markierung} /></p>
       </div>
       <div class="facts">
         {fakten.map(([key, value]) => <div><span>{key}</span><span>{value}</span></div>)}
