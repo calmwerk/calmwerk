@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import { getEntry } from 'astro:content';
-import SectionHead from '../SectionHead.astro';
 import MarkedText from '../MarkedText.astro';
 import { fakten, site } from '../../data/site';
 
@@ -10,18 +9,19 @@ if (!ueber) throw new Error('src/content/ueber/philipp-kremer.md fehlt');
 const { foto, fotoAlt, einleitung, text, markierung } = ueber.data;
 ---
 
+<!-- Foto | Überschrift und Text | Eckdaten; ohne Foto: Text | Eckdaten -->
 <section class="section" id="ueber" aria-labelledby="ueber-title">
   <div class="wrap">
-    <SectionHead label="Über mich" titleId="ueber-title">{site.founder.name}, Gründer von {site.name}.</SectionHead>
     <div class:list={['about', { 'has-portrait': foto }]}>
       {
         foto && (
           <figure class="portrait">
-            <Image src={foto} alt={fotoAlt} widths={[320, 480, 640]} sizes="(max-width: 860px) 240px, 280px" loading="lazy" />
+            <Image src={foto} alt={fotoAlt} widths={[320, 480, 640]} sizes="(max-width: 860px) 320px, 290px" loading="lazy" />
           </figure>
         )
       }
-      <div>
+      <div class="about-body">
+        <h2 id="ueber-title">{site.founder.name},<br />{site.founder.jobTitle}<br />von {site.name}.</h2>
         <p class="lede">{einleitung}</p>
         <p class="about-text"><MarkedText text={text} markierung={markierung} /></p>
       </div>
