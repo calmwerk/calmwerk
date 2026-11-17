@@ -1,11 +1,13 @@
 import { pakete, site } from '../data/site';
+import { absoluteUrl } from './url';
 
 /**
  * Strukturierte Daten (schema.org) für die Startseite.
  * Pakete und Preise kommen aus src/data/site.ts, damit Seite und Google-Daten nie auseinanderlaufen.
  */
 export function startseiteSchema() {
-  const base = site.url;
+  // Ohne Schrägstrich am Ende, damit `${base}/#business` korrekt wird.
+  const base = absoluteUrl().replace(/\/$/, '');
   const { address } = site;
 
   return {
@@ -22,7 +24,7 @@ export function startseiteSchema() {
         email: site.email,
         telephone: site.phoneE164,
         logo: `${base}/assets/img/icon-512.png`,
-        image: `${base}${site.ogImage}`,
+        image: absoluteUrl(site.ogImage),
         priceRange: '€€',
         currenciesAccepted: 'EUR',
         address: {

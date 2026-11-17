@@ -30,7 +30,8 @@ export const site = {
     postalCode: '76187',
   },
   areaServed: ['Karlsruhe', 'Ettlingen', 'Südpfalz'],
-  ogImage: '/assets/img/og-image.png',
+  /** Pfad relativ zur Website. */
+  ogImage: 'assets/img/og-image.png',
   ogImageAlt: 'Calmwerk Logo auf dunklem Grund',
   themeColor: '#F3F3F0',
 } as const;

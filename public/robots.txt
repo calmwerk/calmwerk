@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://calmwerk.de/sitemap-index.xml
