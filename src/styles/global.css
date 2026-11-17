@@ -188,6 +188,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .about.has-portrait { grid-template-columns: 220px minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); }
 .portrait { margin: 0; background: var(--white); border: 1px solid var(--hair); }
 .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
+/* Schwarz-weiß wie die Marke (Tinte und Papier); gilt auch für Fotos, die im CMS hochgeladen werden. */
+.portrait img { filter: grayscale(1) contrast(1.06); }
 @media (max-width: 1080px) { .about.has-portrait { grid-template-columns: 200px minmax(0, 1fr); } .about.has-portrait .facts { grid-column: 1 / -1; } }
 @media (max-width: 860px) { .about, .about.has-portrait { grid-template-columns: 1fr; } .portrait { max-width: 240px; } }
 
