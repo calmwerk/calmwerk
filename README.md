@@ -46,6 +46,7 @@ Unter **https://calmwerk.github.io/calmwerk/admin/** (später `calmwerk.de/admin
 - **Referenzen:** Projekt anlegen, Bild hochladen, Texte ändern, Reihenfolge, **„Sichtbar“** zum Ein- und Ausblenden
 - **Preise und Pakete:** Pakete, Betreuung, Hinweis unter den Preisen
 - **Kontakt und Anschrift:** E-Mail, Telefon, Anschrift, Region (Impressum, Datenschutz, Kontakt und Google-Daten übernehmen sie)
+- **Über mich:** Foto, Einleitung, Text und markierter Teil
 - **Texte der Startseite:** Einleitung der Referenzen samt markiertem Teil
 
 **Anmelden:** „Sign In Using Access Token“ wählen. Der Dialog verlinkt auf GitHub; dort einen Fine-grained Token für `calmwerk/calmwerk` mit **Contents: Read and write** erzeugen und einfügen. Der Token bleibt nur in diesem Browser gespeichert. „Sign In with GitHub“ funktioniert ohne eigenen OAuth-Dienst nicht.
@@ -54,7 +55,7 @@ Unter **https://calmwerk.github.io/calmwerk/admin/** (später `calmwerk.de/admin
 
 **Lokal:** In Chrome oder Edge „Work with Local Repository“ wählen und den Projektordner öffnen – Änderungen landen direkt in den Dateien, ohne Token.
 
-Konfiguration: `public/admin/config.yml`. Die Inhalte liegen in `src/content/referenzen/` und `src/content/einstellungen/`; geprüft werden sie in `src/data/site.ts` und `src/content.config.ts`.
+Konfiguration: `public/admin/config.yml`. Die Inhalte liegen in `src/content/referenzen/`, `src/content/ueber/` und `src/content/einstellungen/`; geprüft werden sie in `src/data/site.ts` und `src/content.config.ts`.
 
 ## Veröffentlichen mit GitHub Pages
 

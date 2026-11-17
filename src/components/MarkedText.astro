@@ -1,0 +1,21 @@
+---
+/**
+ * Text, in dem ein Teil wie mit der Maus markiert erscheint (<mark>).
+ * Kommt der markierte Teil im Text nicht vor, wird der Text ohne Markierung gezeigt.
+ */
+interface Props {
+  text: string;
+  markierung?: string;
+}
+
+const { text, markierung = '' } = Astro.props;
+const start = markierung ? text.indexOf(markierung) : -1;
+---
+
+{
+  start >= 0 ? (
+    <>{text.slice(0, start)}<mark>{markierung}</mark>{text.slice(start + markierung.length)}</>
+  ) : (
+    text
+  )
+}

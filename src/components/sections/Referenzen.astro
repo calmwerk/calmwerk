@@ -2,19 +2,12 @@
 import { Image } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import SectionHead from '../SectionHead.astro';
+import MarkedText from '../MarkedText.astro';
 import { startseite } from '../../data/site';
 
 const referenzen = (await getCollection('referenzen', ({ data }) => data.published)).sort(
   (a, b) => a.data.order - b.data.order,
 );
-// Intro aus dem CMS; der markierte Teil wird wie mit der Maus ausgewählt hervorgehoben.
-const { referenzenIntro: intro, referenzenMarkierung: markierung } = startseite;
-const markStart = markierung ? intro.indexOf(markierung) : -1;
-const introTeile =
-  markStart >= 0
-    ? [intro.slice(0, markStart), markierung, intro.slice(markStart + markierung.length)]
-    : [intro, '', ''];
-
 const projekte = await Promise.all(
   referenzen.map(async (entry) => ({ entry, Content: (await render(entry)).Content })),
 );
@@ -24,7 +17,7 @@ const projekte = await Promise.all(
   <div class="wrap">
     <SectionHead label="Referenzen" titleId="referenzen-title">
       Ausgewählte Projekte.
-      <Fragment slot="lede">{introTeile[0]}{introTeile[1] && <mark>{introTeile[1]}</mark>}{introTeile[2]}</Fragment>
+      <Fragment slot="lede"><MarkedText text={startseite.referenzenIntro} markierung={startseite.referenzenMarkierung} /></Fragment>
     </SectionHead>
     <div class="refs">
       {

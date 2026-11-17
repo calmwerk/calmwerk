@@ -184,7 +184,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .about .facts { border-top: 1px solid var(--ink); }
 .about .facts div { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--hair); font-size: 15px; }
 .about .facts span:last-child { font-family: var(--f-mono); font-size: 14px; color: var(--graphite); text-align: right; }
-@media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+/* Mit Porträt: Foto | Text | Eckdaten; auf dem Smartphone untereinander, Foto zuerst. */
+.about.has-portrait { grid-template-columns: 220px minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); }
+.portrait { margin: 0; background: var(--white); border: 1px solid var(--hair); }
+.portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
+@media (max-width: 1080px) { .about.has-portrait { grid-template-columns: 200px minmax(0, 1fr); } .about.has-portrait .facts { grid-column: 1 / -1; } }
+@media (max-width: 860px) { .about, .about.has-portrait { grid-template-columns: 1fr; } .portrait { max-width: 240px; } }
 
 /* Contact */
 .contact .wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
