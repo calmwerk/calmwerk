@@ -1,0 +1,23 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: boolean;
+}
+
+const { title, description, canonical = true } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} noindex canonical={canonical}>
+  <SiteHeader variant="simple" />
+  <main class="legal">
+    <div class="wrap">
+      <slot />
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>
