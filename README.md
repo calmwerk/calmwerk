@@ -21,7 +21,11 @@ Dann <http://localhost:8080> öffnen.
 | `assets/css/style.css` | Gestaltung nach Markenentwurf 0.1 (Farben, Schriften, Abstände) |
 | `assets/js/main.js` | Menü auf dem Smartphone, E-Mail kopieren |
 | `assets/fonts/` | Jost, Instrument Sans, IBM Plex Mono (SIL Open Font License) |
-| `assets/img/` | Logo, Referenzbilder, Vorschaubild für Social Media |
+| `assets/img/` | Logo, Referenzbilder, Vorschaubild für Social Media, App-Icons (192/512, maskable) |
+| `favicon.ico`, `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png` | Favicons für Browser, Lesezeichen und Homescreen |
+| `site.webmanifest` | Name, Farben und Icons für „Zum Homescreen hinzufügen“ |
+| `robots.txt`, `sitemap.xml` | Hinweise für Suchmaschinen; Impressum und Datenschutz stehen auf `noindex` |
+| `404.html` | Fehlerseite (GitHub Pages und Netlify nutzen sie automatisch) |
 
 ## Vor dem Livegang
 
@@ -29,6 +33,8 @@ Dann <http://localhost:8080> öffnen.
 - [ ] Impressum und Datenschutz: Anschrift, Telefon, Umsatzsteuer-Angabe, Hosting-Anbieter eintragen und rechtlich prüfen lassen
 - [ ] Freigabe der Referenzkunden (MOVE ON Studio 76, Arte Sacra Studios, JD Cosmetics) für Namen und Bilder einholen
 - [ ] Hosting wählen, z. B. GitHub Pages, Netlify oder ein deutscher Anbieter
+- [ ] Nach dem Livegang: Domain in der Google Search Console bestätigen und `sitemap.xml` einreichen; Vorschau mit dem Rich-Results-Test und einem Link-Teilen auf LinkedIn prüfen
+- [ ] Sobald die Anschrift feststeht, `streetAddress` und `postalCode` in den strukturierten Daten (`index.html`) ergänzen
 
 ## Veröffentlichen mit GitHub Pages
 
