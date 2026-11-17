@@ -47,6 +47,22 @@ collections:
       - { name: fokus, label: Fokus }
       - { name: body, label: Beschreibung, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
 
+  - name: ueber
+    label: Über mich
+    description: Foto und Text im Abschnitt „Über mich“. Die Eckdaten daneben (Ausbildung, Erfahrung …) stehen im Code.
+    files:
+      - name: philipp-kremer
+        label: Über mich
+        file: src/content/ueber/philipp-kremer.md
+        media_folder: /src/assets/ueber
+        public_folder: ../../assets/ueber
+        fields:
+          - { name: foto, label: Foto, widget: image, required: false, hint: 'Hochformat, mindestens 640 × 800 px. Leer lassen, um kein Foto zu zeigen.' }
+          - { name: fotoAlt, label: Bildbeschreibung, required: false, hint: 'z. B. Porträt von Philipp Kremer' }
+          - { name: einleitung, label: Einleitung, widget: text }
+          - { name: text, label: Text, widget: text }
+          - { name: markierung, label: Markierter Teil des Textes, required: false, hint: 'Genau so geschrieben wie im Text. Leer lassen für keine Markierung.' }
+
   - name: einstellungen
     label: Einstellungen
     description: Preise, Kontaktdaten und Texte der Startseite.
