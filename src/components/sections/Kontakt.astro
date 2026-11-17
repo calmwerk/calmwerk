@@ -1,5 +1,10 @@
 ---
+import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
 import { site } from '../../data/site';
+
+// Kleines Foto aus „Über mich“; ohne Foto entfällt die Zeile.
+const foto = (await getEntry('ueber', 'philipp-kremer'))?.data.foto;
 
 const mailto = `mailto:${site.email}?subject=${encodeURIComponent(`Erstgespräch ${site.name}`)}`;
 ---
@@ -10,6 +15,10 @@ const mailto = `mailto:${site.email}?subject=${encodeURIComponent(`Erstgespräch
       <p class="label">Kontakt</p>
       <h2 id="kontakt-title">Lassen Sie uns 30 Minuten sprechen.</h2>
       <p class="lede">Erzählen Sie kurz, worum es geht. Sie erhalten innerhalb eines Werktags eine Antwort mit Terminvorschlägen für ein kostenloses Erstgespräch.</p>
+      <div class="contact-person">
+        {foto && <Image src={foto} alt="" width={112} height={112} fit="cover" position="top" loading="lazy" />}
+        <p><b>Sie schreiben direkt mir.</b><span>{site.founder.name}, {site.founder.jobTitle}</span></p>
+      </div>
       <a class="btn light" href={mailto}>E-Mail schreiben <span class="arrow" aria-hidden="true">→</span></a>
     </div>
     <div class="contact-card">
