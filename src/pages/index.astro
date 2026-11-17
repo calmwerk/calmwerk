@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Hero from '../components/sections/Hero.astro';
+import Leistungen from '../components/sections/Leistungen.astro';
+import Preise from '../components/sections/Preise.astro';
+import Referenzen from '../components/sections/Referenzen.astro';
+import Ablauf from '../components/sections/Ablauf.astro';
+import Ueber from '../components/sections/Ueber.astro';
+import Kontakt from '../components/sections/Kontakt.astro';
+import { site } from '../data/site';
+import { startseiteSchema } from '../lib/schema';
+---
+
+<BaseLayout
+  title="Calmwerk – Websites, Shops und Automatisierung in Karlsruhe"
+  socialTitle={`${site.name} – ${site.claim.replace(/\.$/, '')}`}
+  description={site.description}
+  jsonLd={startseiteSchema()}
+>
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+  <SiteHeader />
+  <main id="inhalt">
+    <Hero />
+    <Leistungen />
+    <Preise />
+    <Referenzen />
+    <Ablauf />
+    <Ueber />
+    <Kontakt />
+  </main>
+  <SiteFooter />
+</BaseLayout>

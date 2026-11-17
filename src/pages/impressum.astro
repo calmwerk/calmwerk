@@ -1,0 +1,33 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { site } from '../data/site';
+---
+
+<LegalLayout title="Impressum – Calmwerk" description="Impressum von Calmwerk – Philipp Kremer, Karlsruhe: Anbieterkennzeichnung und Kontakt.">
+  <h1>Impressum</h1>
+
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <p>
+    {site.legalName}<br />
+    <span class="fill">[Straße Hausnummer]</span><br />
+    <span class="fill">[PLZ] Karlsruhe</span>
+  </p>
+
+  <h2>Kontakt</h2>
+  <p>
+    E-Mail: {site.email}<br />
+    Telefon: <span class="fill">[Telefonnummer]</span>
+  </p>
+
+  <h2>Umsatzsteuer</h2>
+  <p><span class="fill">[Als Kleinunternehmer: „Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.“ – oder: Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE…]</span></p>
+
+  <h2>Verantwortlich für den Inhalt</h2>
+  <p>{site.founder.name}, Anschrift wie oben</p>
+
+  <h2>Verbraucherstreitbeilegung</h2>
+  <p>Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+  <h2>Haftung für Links</h2>
+  <p>Diese Website enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.</p>
+</LegalLayout>
