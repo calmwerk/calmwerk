@@ -1,0 +1,27 @@
+---
+import SectionHead from '../SectionHead.astro';
+import { schichten } from '../../data/site';
+---
+
+<section class="section dark" id="leistungen" aria-labelledby="leistungen-title">
+  <div class="wrap">
+    <SectionHead label="Leistungen" titleId="leistungen-title">
+      Ein System aus drei Schichten, das mit Ihnen wächst.
+      <Fragment slot="lede">Viele Agenturen liefern eine Website und sind dann fertig. Calmwerk baut so, dass später Automatisierungen und KI andocken können, ohne neu anzufangen.</Fragment>
+    </SectionHead>
+    <div class="layers">
+      {
+        schichten.map((schicht) => (
+          <article class="layer">
+            <span class="mono">Schicht {schicht.nummer}</span>
+            <h3>{schicht.titel}</h3>
+            <p>{schicht.text}</p>
+            <ul>
+              {schicht.punkte.map((punkt) => <li>{punkt}</li>)}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

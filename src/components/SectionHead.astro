@@ -1,0 +1,18 @@
+---
+interface Props {
+  label: string;
+  /** id der Überschrift, für aria-labelledby der Section. */
+  titleId: string;
+}
+
+const { label, titleId } = Astro.props;
+const hasLede = Astro.slots.has('lede');
+---
+
+<div class="section-head">
+  <p class="label">{label}</p>
+  <div>
+    <h2 id={titleId}><slot /></h2>
+    {hasLede && <p class="lede"><slot name="lede" /></p>}
+  </div>
+</div>

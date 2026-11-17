@@ -1,0 +1,46 @@
+---
+import SectionHead from '../SectionHead.astro';
+import { betreuung, pakete, zahlungshinweis } from '../../data/site';
+import { formatEuro, formatMonat } from '../../lib/format';
+---
+
+<section class="section" id="preise" aria-labelledby="preise-title">
+  <div class="wrap">
+    <SectionHead label="Preise" titleId="preise-title">
+      Feste Pakete, feste Preise.
+      <Fragment slot="lede">Sie wissen vorher, was es kostet und wann es fertig ist. Nach dem Erstgespräch erhalten Sie ein Festpreisangebot.</Fragment>
+    </SectionHead>
+    <div class="price-wrap">
+      <table class="price-table">
+        <thead>
+          <tr><th scope="col">Paket</th><th scope="col">Inhalt</th><th scope="col">Dauer</th><th scope="col" class="num">Preis</th></tr>
+        </thead>
+        <tbody>
+          {
+            pakete.map((paket) => (
+              <tr>
+                <td>{paket.name}</td>
+                <td class="desc">{paket.inhalt}</td>
+                <td class="dur">{paket.dauer}</td>
+                <td class="num">{formatEuro(paket.preis, paket.ab)}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="care" aria-label="Betreuung">
+      {
+        betreuung.map((b) => (
+          <div>
+            <b>{b.name}</b>
+            <span class="price">{formatMonat(b.preis, b.ab)}</span>
+            <p>{b.text}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="mono note">{zahlungshinweis}</p>
+  </div>
+</section>

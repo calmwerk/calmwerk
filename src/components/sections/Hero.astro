@@ -1,0 +1,30 @@
+---
+import { pakete } from '../../data/site';
+import { formatEuro } from '../../lib/format';
+
+const einstieg = pakete[0]!;
+const specs: [string, string][] = [
+  ['Website', formatEuro(einstieg.preis, einstieg.ab)],
+  ['Lieferzeit', '3–4 Wochen'],
+  ['Abrechnung', 'Festpreis'],
+  ['Ansprechpartner', '1'],
+  ['Erstgespräch', '30 Min. · kostenlos'],
+];
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <div>
+      <p class="label mb-label">Websites · Shops · Automatisierung · Karlsruhe</p>
+      <h1 id="hero-title">Digitale Systeme, <span class="quiet">die ruhig laufen.</span></h1>
+      <p class="lede">Ihre Website oder Ihr Shop als Fundament, darauf Abläufe, die sich selbst erledigen: Terminbuchungen, Anfragen, Berichte. Für kleine und mittlere Unternehmen in Karlsruhe und Umgebung.</p>
+      <div class="ctas">
+        <a class="btn" href="#kontakt">Kostenloses Erstgespräch <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="#referenzen">Referenzen ansehen</a>
+      </div>
+    </div>
+    <div class="specs" aria-label="Eckdaten">
+      {specs.map(([key, value]) => <div><span>{key}</span><span>{value}</span></div>)}
+    </div>
+  </div>
+</section>
