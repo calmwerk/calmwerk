@@ -184,14 +184,16 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .about .facts { border-top: 1px solid var(--ink); }
 .about .facts div { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--hair); font-size: 15px; }
 .about .facts span:last-child { font-family: var(--f-mono); font-size: 14px; color: var(--graphite); text-align: right; }
-/* Mit Porträt: Foto | Text | Eckdaten; auf dem Smartphone untereinander, Foto zuerst. */
-.about.has-portrait { grid-template-columns: 220px minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); }
-.portrait { margin: 0; background: var(--white); border: 1px solid var(--hair); }
+/* Über mich: Foto | Überschrift und Text | Eckdaten; darunter zweispaltig, auf dem Smartphone untereinander. */
+.about.has-portrait { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); }
+.about-body h2 { font-size: clamp(30px, 3.6vw, 44px); line-height: 1.08; margin-bottom: 24px; }
+.about .lede { font-size: clamp(17px, 1.6vw, 19px); }
+.portrait { margin: 0; background: var(--ink); }
 .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
 /* Schwarz-weiß wie die Marke (Tinte und Papier); gilt auch für Fotos, die im CMS hochgeladen werden. */
-.portrait img { filter: grayscale(1) contrast(1.06); }
-@media (max-width: 1080px) { .about.has-portrait { grid-template-columns: 200px minmax(0, 1fr); } .about.has-portrait .facts { grid-column: 1 / -1; } }
-@media (max-width: 860px) { .about, .about.has-portrait { grid-template-columns: 1fr; } .portrait { max-width: 240px; } }
+.portrait img, .contact-person img { filter: grayscale(1) contrast(1.06); }
+@media (max-width: 1080px) { .about.has-portrait { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); } .about.has-portrait .facts { grid-column: 1 / -1; } }
+@media (max-width: 860px) { .about, .about.has-portrait { grid-template-columns: 1fr; } .portrait { max-width: 320px; } }
 
 /* Contact */
 .contact .wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
@@ -222,7 +224,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 /* Hilfsklassen (ersetzen frühere Inline-Styles) */
 .mb-label { margin-bottom: 28px; }
 .contact .label { margin-bottom: 24px; }
-.contact .lede { margin-bottom: 36px; }
+.contact .lede { margin-bottom: 28px; }
+/* Kontakt: kleines Foto mit „Sie schreiben direkt mir.“ */
+.contact-person { display: flex; align-items: center; gap: 16px; margin-bottom: 36px; }
+.contact-person img { width: 56px; height: 56px; object-fit: cover; flex: none; }
+.contact-person p { display: grid; gap: 2px; font-size: 15px; line-height: 1.4; }
+.contact-person b { font-weight: 600; color: var(--white); }
+.contact-person span { color: #C9CDD1; }
 .about-text { margin-top: 16px; color: var(--graphite); }
 .ref-img { margin: 0; }
 .btn.compact { padding: 11px 18px; font-size: 14px; }
