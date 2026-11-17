@@ -27,7 +27,7 @@ npm run preview    # gebaute Seite lokal ansehen
 | `src/components/` | Kopfzeile, Fußzeile, Abschnittsüberschrift |
 | `src/layouts/BaseLayout.astro` | Gemeinsamer `<head>`: Titel, Beschreibung, Canonical, Social-Media-Vorschau, Icons, strukturierte Daten |
 | `src/layouts/LegalLayout.astro` | Rahmen für Impressum, Datenschutz und 404 (`noindex`) |
-| `src/pages/` | Seiten: `index`, `impressum`, `datenschutz`, `404` |
+| `src/pages/` | Seiten: `index`, `impressum`, `datenschutz`, `404`, `signatur` (E-Mail-Signatur zum Kopieren, `noindex`) |
 | `src/lib/schema.ts` | Strukturierte Daten (schema.org) für Google, aus `site.ts` erzeugt |
 | `src/styles/global.css` | Gestaltung nach Markenentwurf 0.1 (Farben, Schriften, Abstände) |
 | `src/scripts/main.ts` | Menü auf dem Smartphone, Kopfzeile beim Scrollen, E-Mail kopieren |
