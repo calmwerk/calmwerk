@@ -1,11 +1,12 @@
 ---
+import { withBase } from '../lib/url';
 import { site } from '../data/site';
 ---
 
 <footer class="site-footer">
   <div class="wrap">
-    <img src="/assets/img/logo-negativ.svg" alt="Calmwerk" width="140" height="15" />
-    <nav aria-label="Rechtliches"><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutz</a></nav>
+    <img src={withBase('assets/img/logo-negativ.svg')} alt="Calmwerk" width="140" height="15" />
+    <nav aria-label="Rechtliches"><a href={withBase('impressum.html')}>Impressum</a><a href={withBase('datenschutz.html')}>Datenschutz</a></nav>
     <span class="mono">© <span data-year>{new Date().getFullYear()}</span> {site.name} · {site.founder.name}</span>
   </div>
 </footer>

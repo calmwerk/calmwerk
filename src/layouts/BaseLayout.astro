@@ -1,4 +1,6 @@
 ---
+import fontUrl from '../assets/fonts/instrument-sans-var.woff2?url';
+import { absoluteUrl, withBase } from '../lib/url';
 import '../styles/global.css';
 import { site } from '../data/site';
 
@@ -19,7 +21,7 @@ interface Props {
 const { title, description, socialTitle = title, noindex = false, canonical = true, jsonLd } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname.replace(/index\.html$/, ''), Astro.site).href;
-const ogImage = new URL(site.ogImage, Astro.site).href;
+const ogImage = absoluteUrl(site.ogImage);
 ---
 
 <!doctype html>
@@ -62,11 +64,11 @@ const ogImage = new URL(site.ogImage, Astro.site).href;
       )
     }
 
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" href={withBase('favicon.ico')} sizes="48x48" />
+    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={withBase('favicon-32.png')} sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href={withBase('apple-touch-icon.png')} sizes="180x180" />
+    <link rel="manifest" href={withBase('site.webmanifest')} />
 
     <!-- Als App auf dem Homescreen (iOS und Android) -->
     <meta name="application-name" content={site.name} />
@@ -74,7 +76,7 @@ const ogImage = new URL(site.ogImage, Astro.site).href;
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <link rel="preload" href="/assets/fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />
 
     {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>

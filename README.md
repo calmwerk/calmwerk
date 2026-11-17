@@ -30,13 +30,17 @@ npm run preview    # gebaute Seite lokal ansehen
 | `src/lib/schema.ts` | Strukturierte Daten (schema.org) für Google, aus `site.ts` erzeugt |
 | `src/styles/global.css` | Gestaltung nach Markenentwurf 0.1 (Farben, Schriften, Abstände) |
 | `src/scripts/main.ts` | Menü auf dem Smartphone, Kopfzeile beim Scrollen, E-Mail kopieren |
-| `public/` | Wird unverändert ausgeliefert: Favicons, Web-Manifest, `robots.txt`, Logo, Vorschaubild, Schriften |
+| `src/lib/url.ts` | `withBase()` und `absoluteUrl()`: alle Links und Dateipfade passen sich dem Veröffentlichungsort an |
+| `src/assets/fonts/` | Schriften; werden beim Build mit Hash im Dateinamen ausgeliefert |
+| `public/` | Wird unverändert ausgeliefert: Favicons, Web-Manifest, Logo, Vorschaubild |
 
-Die Sitemap (`sitemap-index.xml`) entsteht beim Build automatisch; Impressum, Datenschutz und 404 sind ausgenommen.
+Die Sitemap (`sitemap-index.xml`) und `robots.txt` entstehen beim Build automatisch; Impressum, Datenschutz und 404 sind in der Sitemap ausgenommen.
+
+**Pfade:** Im Code nie `/datei` schreiben, sondern `withBase('datei')` aus `src/lib/url.ts`. So läuft die Seite unter `calmwerk.github.io/calmwerk/` genauso wie unter `calmwerk.de`. Der Workflow liest Adresse und Basispfad aus GitHub Pages; lokal gilt `https://calmwerk.de`. Testweise mit Unterpfad bauen: `SITE_URL=https://calmwerk.github.io BASE_PATH=/calmwerk npm run build`.
 
 ## Veröffentlichen mit GitHub Pages
 
-Der Workflow `.github/workflows/deploy.yml` baut bei jedem Push auf `main` und veröffentlicht die Seite. Einmalig in GitHub: Settings → Pages → Source: **GitHub Actions**. Danach die eigene Domain unter „Custom domain“ eintragen und beim Domain-Anbieter die DNS-Einträge setzen. Bei Pull Requests baut der Workflow nur (Typprüfung inklusive), ohne zu veröffentlichen.
+Der Workflow `.github/workflows/deploy.yml` baut bei jedem Push auf `main` und veröffentlicht die Seite unter https://calmwerk.github.io/calmwerk/. Für die eigene Domain: Settings → Pages → „Custom domain“ `calmwerk.de` eintragen, beim Domain-Anbieter die DNS-Einträge setzen und den Workflow einmal neu starten – Links, Canonical und Sitemap stellen sich dann von selbst auf `calmwerk.de` um. Bei Pull Requests baut der Workflow nur (Typprüfung inklusive), ohne zu veröffentlichen.
 
 Netlify oder Cloudflare Pages gehen genauso: Build-Befehl `npm run build`, Ausgabeordner `dist`.
 
