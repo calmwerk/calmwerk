@@ -5,29 +5,99 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Calmwerk – Websites, Shops und Automatisierung in Karlsruhe</title>
   <meta name="description" content="Calmwerk baut digitale Systeme für kleine und mittlere Unternehmen in Karlsruhe: Website oder Shop als Fundament, darauf Automatisierung und KI. Festpreis, 3–4 Wochen, ein Ansprechpartner.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Philipp Kremer">
   <meta name="theme-color" content="#F3F3F0">
+  <meta name="geo.region" content="DE-BW">
+  <meta name="geo.placename" content="Karlsruhe">
   <link rel="canonical" href="https://calmwerk.de/">
+  <link rel="alternate" hreflang="de" href="https://calmwerk.de/">
+
+  <!-- Social Media (Open Graph, X/Twitter) -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Calmwerk">
+  <meta property="og:url" content="https://calmwerk.de/">
   <meta property="og:title" content="Calmwerk – Digitale Systeme, die ruhig laufen">
   <meta property="og:description" content="Websites, Shops und Automatisierung für kleine und mittlere Unternehmen in Karlsruhe. Festpreis, 3–4 Wochen, ein Ansprechpartner.">
   <meta property="og:image" content="https://calmwerk.de/assets/img/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Calmwerk Logo auf dunklem Grund">
   <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Calmwerk – Digitale Systeme, die ruhig laufen">
+  <meta name="twitter:description" content="Websites, Shops und Automatisierung für kleine und mittlere Unternehmen in Karlsruhe. Festpreis, 3–4 Wochen, ein Ansprechpartner.">
+  <meta name="twitter:image" content="https://calmwerk.de/assets/img/og-image.png">
+  <meta name="twitter:image:alt" content="Calmwerk Logo auf dunklem Grund">
+
+  <!-- Icons -->
+  <link rel="icon" href="favicon.ico" sizes="48x48">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
   <link rel="preload" href="assets/fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Calmwerk",
-    "description": "Websites, Shopify-Shops und Automatisierung für kleine und mittlere Unternehmen.",
-    "url": "https://calmwerk.de/",
-    "email": "philipp@calmwerk.de",
-    "areaServed": "Karlsruhe",
-    "founder": { "@type": "Person", "name": "Philipp Kremer" },
-    "priceRange": "€€"
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://calmwerk.de/#business",
+        "name": "Calmwerk",
+        "legalName": "Calmwerk – Philipp Kremer",
+        "slogan": "Digitale Systeme, die ruhig laufen.",
+        "description": "Websites, Shopify-Shops und Automatisierung für kleine und mittlere Unternehmen in Karlsruhe. Festpreis, 3–4 Wochen, ein Ansprechpartner.",
+        "url": "https://calmwerk.de/",
+        "email": "philipp@calmwerk.de",
+        "logo": "https://calmwerk.de/assets/img/icon-512.png",
+        "image": "https://calmwerk.de/assets/img/og-image.png",
+        "priceRange": "€€",
+        "currenciesAccepted": "EUR",
+        "address": { "@type": "PostalAddress", "addressLocality": "Karlsruhe", "addressRegion": "Baden-Württemberg", "addressCountry": "DE" },
+        "areaServed": [
+          { "@type": "City", "name": "Karlsruhe" },
+          { "@type": "City", "name": "Ettlingen" },
+          { "@type": "AdministrativeArea", "name": "Südpfalz" }
+        ],
+        "founder": { "@id": "https://calmwerk.de/#founder" },
+        "knowsAbout": ["Webdesign", "Shopify", "Barrierefreiheit (WCAG)", "Prozessautomatisierung", "Künstliche Intelligenz"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Pakete",
+          "itemListElement": [
+            { "@type": "Offer", "name": "Start-Website", "description": "Onepager oder kleine Website bis 5 Seiten, Domain, E-Mail", "priceSpecification": { "@type": "PriceSpecification", "minPrice": 1490, "priceCurrency": "EUR", "valueAddedTaxIncluded": false } },
+            { "@type": "Offer", "name": "Business-Website", "description": "Konzept, Design nach Erscheinungsbild, bis 15 Seiten, Suchmaschinen-Grundlagen", "priceSpecification": { "@type": "PriceSpecification", "minPrice": 2900, "priceCurrency": "EUR", "valueAddedTaxIncluded": false } },
+            { "@type": "Offer", "name": "Shopify-Shop", "description": "Einrichtung, eigenes Theme, Zahlung, Versand, Rechtstexte", "priceSpecification": { "@type": "PriceSpecification", "minPrice": 3490, "priceCurrency": "EUR", "valueAddedTaxIncluded": false } },
+            { "@type": "Offer", "name": "Automatisierung", "description": "Ein Ablauf analysiert und automatisiert", "priceSpecification": { "@type": "PriceSpecification", "minPrice": 990, "priceCurrency": "EUR", "valueAddedTaxIncluded": false } },
+            { "@type": "Offer", "name": "KI-Assistent", "description": "Internes Dashboard mit Anbindung an Mail, Kalender und Daten", "priceSpecification": { "@type": "PriceSpecification", "minPrice": 3900, "priceCurrency": "EUR", "valueAddedTaxIncluded": false } },
+            { "@type": "Offer", "name": "Digital-Check", "description": "Analyse des Auftritts mit Befundliste und Maßnahmenplan", "price": 290, "priceCurrency": "EUR" }
+          ]
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://calmwerk.de/#founder",
+        "name": "Philipp Kremer",
+        "jobTitle": "Gründer",
+        "worksFor": { "@id": "https://calmwerk.de/#business" },
+        "hasCredential": [
+          { "@type": "EducationalOccupationalCredential", "name": "GitHub Foundations" },
+          { "@type": "EducationalOccupationalCredential", "name": "Claude Certified Architect" }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://calmwerk.de/#website",
+        "url": "https://calmwerk.de/",
+        "name": "Calmwerk",
+        "inLanguage": "de-DE",
+        "publisher": { "@id": "https://calmwerk.de/#business" }
+      }
+    ]
   }
   </script>
 </head>
