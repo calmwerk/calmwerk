@@ -211,7 +211,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .legal h2 { font-size: 22px; margin: 40px 0 12px; }
 .legal p, .legal li { color: var(--graphite); }
 .legal p + p { margin-top: 12px; }
-.fill { background: #F2EDE3; border-bottom: 1px dashed var(--brass); padding: 0 4px; font-family: var(--f-mono); font-size: 14px; color: var(--ink); }
 
 /* Hilfsklassen (ersetzen frühere Inline-Styles) */
 .mb-label { margin-bottom: 28px; }
