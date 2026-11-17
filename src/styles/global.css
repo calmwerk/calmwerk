@@ -17,6 +17,7 @@
   --white: #FBFBF9;
   --brass: #A6895B;
   --brass-soft: #C9B48F;
+  --mark: #E9E0CD;
 
   --f-mark: "Jost", "Futura", "Century Gothic", sans-serif;
   --f-text: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
@@ -221,3 +222,24 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .btn.compact { padding: 11px 18px; font-size: 14px; }
 .legal .label { margin-bottom: 20px; }
 .legal .notfound-text { margin-bottom: 32px; }
+
+/* Schlagwörter: Textmarker wie eine Auswahl mit der Maus (Issue #2).
+   Helle, warme Fläche statt Messing – Messing bleibt laut Markenentwurf Linie, nie Fläche hinter Text.
+   Ruhezustand ist sichtbar; nur mit JavaScript und ohne „Bewegung reduzieren“ läuft die Fläche einmal ein. */
+mark {
+  color: inherit;
+  background-color: transparent;
+  background-image: linear-gradient(var(--mark), var(--mark));
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 100% 100%;
+  /* Fläche ragt etwas über das Wort hinaus, ohne den Text zu verschieben (Padding = negativer Rand). */
+  padding: 0.04em 0.16em;
+  margin: 0 -0.16em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .js mark { transition: background-size 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+  .js mark:not(.is-marked) { background-size: 0% 100%; }
+}
