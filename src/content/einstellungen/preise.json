@@ -1,0 +1,73 @@
+{
+  "pakete": [
+    {
+      "name": "Start-Website",
+      "inhalt": "Onepager oder kleine Website bis 5 Seiten, Domain, E-Mail, einfach selbst zu pflegen",
+      "dauer": "1–2 Wochen",
+      "preis": 1490,
+      "ab": true
+    },
+    {
+      "name": "Business-Website",
+      "inhalt": "Konzept, Design nach Ihrem Erscheinungsbild, bis 15 Seiten, Suchmaschinen-Grundlagen, auf Anfragen optimiert",
+      "dauer": "3–4 Wochen",
+      "preis": 2900,
+      "ab": true
+    },
+    {
+      "name": "Shopify-Shop",
+      "inhalt": "Einrichtung, eigenes Theme, Zahlung, Versand, Einbindung der Rechtstexte",
+      "dauer": "3–4 Wochen",
+      "preis": 3490,
+      "ab": true
+    },
+    {
+      "name": "Automatisierung",
+      "inhalt": "Ein Ablauf analysiert und automatisiert, zum Beispiel Anfrage → Kundenliste → Antwortmail",
+      "dauer": "1–2 Wochen",
+      "preis": 990,
+      "ab": true
+    },
+    {
+      "name": "KI-Assistent",
+      "inhalt": "Internes Dashboard mit Anbindung an Mail, Kalender und Daten; KI für Routineaufgaben",
+      "dauer": "4–6 Wochen",
+      "preis": 3900,
+      "ab": true
+    },
+    {
+      "name": "Digital-Check",
+      "inhalt": "Analyse Ihres Auftritts mit Befundliste und Maßnahmenplan; wird bei Auftrag angerechnet",
+      "dauer": "1 Tag",
+      "preis": 290,
+      "ab": false
+    }
+  ],
+  "betreuung": [
+    {
+      "name": "Care",
+      "preis": 49,
+      "ab": false,
+      "text": "Überwachung, Updates, Backups, Sicherheit, kleine Änderungen bis 30 Minuten."
+    },
+    {
+      "name": "Care Plus",
+      "preis": 149,
+      "ab": false,
+      "text": "Wie Care, dazu zwei Stunden Änderungen und Pflege Ihres Shops."
+    },
+    {
+      "name": "Growth",
+      "preis": 390,
+      "ab": false,
+      "text": "Monatliche Auswertung, Optimierung für Suche und Anfragen, vier Stunden Weiterentwicklung."
+    },
+    {
+      "name": "Automation Care",
+      "preis": 99,
+      "ab": true,
+      "text": "Betrieb und Anpassung Ihrer Automatisierungen, KI-Kosten transparent."
+    }
+  ],
+  "hinweis": "Alle Preise netto. Zahlung: 50 % bei Auftrag, 50 % bei Abnahme. Betreuung monatlich kündbar."
+}
