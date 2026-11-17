@@ -19,7 +19,8 @@ npm run preview    # gebaute Seite lokal ansehen
 
 | Pfad | Inhalt |
 | --- | --- |
-| `src/data/site.ts` | **Alle Texte mit Zahlen an einer Stelle:** Pakete und Preise, Betreuung, Ablauf, Kontaktdaten, Anschrift. Startseite und Google-Daten lesen beide hieraus. |
+| `src/content/einstellungen/*.json` | Im CMS gepflegt: Preise und Pakete, Kontakt und Anschrift, Texte der Startseite |
+| `src/data/site.ts` | Liest und prüft die Einstellungen; dazu feste Inhalte wie Leistungen, Ablauf und Über mich. Startseite und Google-Daten lesen beide hieraus. |
 | `src/content/referenzen/*.md` | Eine Datei pro Referenz: Kopfdaten (Titel, Branche, Bild, Umfang, Fokus) und Beschreibung. Neue Fallstudie = neue Datei. `published: false` blendet eine Referenz aus. |
 | `src/assets/referenzen/` | Referenzbilder; Astro erzeugt daraus automatisch kleine WebP-Dateien in mehreren Größen. |
 | `src/components/sections/` | Die Abschnitte der Startseite (Hero, Leistungen, Preise, Referenzen, Ablauf, Über mich, Kontakt). |
@@ -37,6 +38,23 @@ npm run preview    # gebaute Seite lokal ansehen
 Die Sitemap (`sitemap-index.xml`) und `robots.txt` entstehen beim Build automatisch; Impressum, Datenschutz und 404 sind in der Sitemap ausgenommen.
 
 **Pfade:** Im Code nie `/datei` schreiben, sondern `withBase('datei')` aus `src/lib/url.ts`. So läuft die Seite unter `calmwerk.github.io/calmwerk/` genauso wie unter `calmwerk.de`. Der Workflow liest Adresse und Basispfad aus GitHub Pages; lokal gilt `https://calmwerk.de`. Testweise mit Unterpfad bauen: `SITE_URL=https://calmwerk.github.io BASE_PATH=/calmwerk npm run build`.
+
+## Inhalte bearbeiten (CMS)
+
+Unter **https://calmwerk.github.io/calmwerk/admin/** (später `calmwerk.de/admin/`) läuft [Sveltia CMS](https://sveltiacms.app). Dort lassen sich ohne Code bearbeiten:
+
+- **Referenzen:** Projekt anlegen, Bild hochladen, Texte ändern, Reihenfolge, **„Sichtbar“** zum Ein- und Ausblenden
+- **Preise und Pakete:** Pakete, Betreuung, Hinweis unter den Preisen
+- **Kontakt und Anschrift:** E-Mail, Telefon, Anschrift, Region (Impressum, Datenschutz, Kontakt und Google-Daten übernehmen sie)
+- **Texte der Startseite:** Einleitung der Referenzen samt markiertem Teil
+
+**Anmelden:** „Sign In Using Access Token“ wählen. Der Dialog verlinkt auf GitHub; dort einen Fine-grained Token für `calmwerk/calmwerk` mit **Contents: Read and write** erzeugen und einfügen. Der Token bleibt nur in diesem Browser gespeichert. „Sign In with GitHub“ funktioniert ohne eigenen OAuth-Dienst nicht.
+
+**Speichern = veröffentlichen:** Jede Änderung ist ein Commit auf `main` (`docs: update …`); der Workflow baut und veröffentlicht die Seite in etwa einer Minute. Vor dem nächsten Code-Release `main` in `develop` mergen, damit die CMS-Änderungen dort ankommen. Fehlerhafte Eingaben (z. B. eine Postleitzahl mit vier Ziffern) lassen den Build mit einer klaren Meldung scheitern; die Live-Seite bleibt dann unverändert.
+
+**Lokal:** In Chrome oder Edge „Work with Local Repository“ wählen und den Projektordner öffnen – Änderungen landen direkt in den Dateien, ohne Token.
+
+Konfiguration: `public/admin/config.yml`. Die Inhalte liegen in `src/content/referenzen/` und `src/content/einstellungen/`; geprüft werden sie in `src/data/site.ts` und `src/content.config.ts`.
 
 ## Veröffentlichen mit GitHub Pages
 
