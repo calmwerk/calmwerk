@@ -13,6 +13,10 @@ export const site = {
   shortDescription:
     'Websites, Shops und Automatisierung für kleine und mittlere Unternehmen in Karlsruhe. Festpreis, 3–4 Wochen, ein Ansprechpartner.',
   email: 'philipp@calmwerk.de',
+  /** Anzeige im Impressum. */
+  phone: '+49 163 7285172',
+  /** Für Links und strukturierte Daten (E.164). */
+  phoneE164: '+491637285172',
   founder: {
     name: 'Philipp Kremer',
     jobTitle: 'Gründer',
@@ -22,9 +26,8 @@ export const site = {
     locality: 'Karlsruhe',
     region: 'Baden-Württemberg',
     country: 'DE',
-    // Sobald die Anschrift feststeht, hier ergänzen (erscheint dann in den Google-Daten):
-    street: undefined as string | undefined,
-    postalCode: undefined as string | undefined,
+    street: 'Keßlaustraße 28',
+    postalCode: '76187',
   },
   areaServed: ['Karlsruhe', 'Ettlingen', 'Südpfalz'],
   ogImage: '/assets/img/og-image.png',

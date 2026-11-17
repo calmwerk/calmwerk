@@ -9,18 +9,15 @@ import { site } from '../data/site';
   <h2>Angaben gemäß § 5 DDG</h2>
   <p>
     {site.legalName}<br />
-    <span class="fill">[Straße Hausnummer]</span><br />
-    <span class="fill">[PLZ] Karlsruhe</span>
+    {site.address.street}<br />
+    {site.address.postalCode} {site.address.locality}
   </p>
 
   <h2>Kontakt</h2>
   <p>
     E-Mail: {site.email}<br />
-    Telefon: <span class="fill">[Telefonnummer]</span>
+    Telefon: {site.phone}
   </p>
-
-  <h2>Umsatzsteuer</h2>
-  <p><span class="fill">[Als Kleinunternehmer: „Gemäß § 19 UStG wird keine Umsatzsteuer berechnet.“ – oder: Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE…]</span></p>
 
   <h2>Verantwortlich für den Inhalt</h2>
   <p>{site.founder.name}, Anschrift wie oben</p>
