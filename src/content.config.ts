@@ -24,4 +24,18 @@ const referenzen = defineCollection({
     }),
 });
 
-export const collections = { referenzen };
+/** „Über mich“ auf der Startseite: eine Datei, im CMS unter „Über mich“. */
+const ueber = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/ueber' }),
+  schema: ({ image }) =>
+    z.object({
+      /** Porträt; ohne Foto zeigt die Seite nur Text und Eckdaten. */
+      foto: image().optional(),
+      fotoAlt: z.string().default(''),
+      einleitung: z.string().min(1),
+      text: z.string().min(1),
+      markierung: z.string().default(''),
+    }),
+});
+
+export const collections = { referenzen, ueber };
