@@ -7,7 +7,7 @@ import { ablauf, prinzipien } from '../../data/site';
   <div class="wrap">
     <SectionHead label="Ablauf" titleId="ablauf-title">
       Vom ersten Gespräch zur fertigen Website in vier Schritten.
-      <Fragment slot="lede">Eine Website dauert drei bis vier Wochen, weil bewährte Bausteine wiederverwendet werden. Sie sehen den Fortschritt jederzeit live.</Fragment>
+      <Fragment slot="lede">Eine Website dauert <mark>drei bis vier Wochen</mark>, weil bewährte Bausteine wiederverwendet werden. Sie sehen den Fortschritt jederzeit live.</Fragment>
     </SectionHead>
     <ol class="steps">
       {ablauf.map((schritt) => <li><h3>{schritt.titel}</h3><p>{schritt.text}</p><span class="mono">{schritt.dauer}</span></li>)}
