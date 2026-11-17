@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import SectionHead from '../SectionHead.astro';
+
+const referenzen = (await getCollection('referenzen', ({ data }) => data.published)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const projekte = await Promise.all(
+  referenzen.map(async (entry) => ({ entry, Content: (await render(entry)).Content })),
+);
+---
+
+<section class="section" id="referenzen" aria-labelledby="referenzen-title">
+  <div class="wrap">
+    <SectionHead label="Referenzen" titleId="referenzen-title">
+      Ausgewählte Projekte.
+      <Fragment slot="lede">Ein Tanzstudio, ein Modelabel und ein Kosmetikinstitut: drei Branchen, ein Anspruch an Sorgfalt.</Fragment>
+    </SectionHead>
+    <div class="refs">
+      {
+        projekte.map(({ entry, Content }) => (
+          <article class="ref">
+            <figure class="ref-img">
+              <Image
+                src={entry.data.image}
+                alt={entry.data.imageAlt}
+                widths={[700, 1000, 1400]}
+                sizes="(max-width: 860px) 100vw, 660px"
+                loading="lazy"
+              />
+            </figure>
+            <div class="ref-body">
+              <span class="mono">{entry.data.branche} · {entry.data.ort}</span>
+              <h3>{entry.data.title}</h3>
+              <Content />
+              <dl>
+                <dt>Umfang</dt><dd>{entry.data.umfang}</dd>
+                <dt>Fokus</dt><dd>{entry.data.fokus}</dd>
+              </dl>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

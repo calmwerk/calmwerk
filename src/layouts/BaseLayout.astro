@@ -1,0 +1,86 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+
+interface Props {
+  /** Inhalt des <title>-Tags. */
+  title: string;
+  description: string;
+  /** Titel für Social-Media-Vorschauen; Standard ist `title`. */
+  socialTitle?: string;
+  /** true = Seite nicht in Suchergebnissen anzeigen. */
+  noindex?: boolean;
+  /** Ohne Canonical (z. B. 404-Seite). */
+  canonical?: boolean;
+  /** Strukturierte Daten (schema.org) als Objekt. */
+  jsonLd?: object;
+}
+
+const { title, description, socialTitle = title, noindex = false, canonical = true, jsonLd } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname.replace(/index\.html$/, ''), Astro.site).href;
+const ogImage = new URL(site.ogImage, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+    <meta name="author" content={site.founder.name} />
+    <meta name="theme-color" content={site.themeColor} />
+    {canonical && <link rel="canonical" href={canonicalUrl} />}
+
+    {
+      !noindex && (
+        <>
+          <meta name="geo.region" content="DE-BW" />
+          <meta name="geo.placename" content={site.address.locality} />
+          <link rel="alternate" hreflang="de" href={canonicalUrl} />
+
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content={site.name} />
+          <meta property="og:url" content={canonicalUrl} />
+          <meta property="og:title" content={socialTitle} />
+          <meta property="og:description" content={description} />
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:image:type" content="image/png" />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content={site.ogImageAlt} />
+          <meta property="og:locale" content="de_DE" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={socialTitle} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:image" content={ogImage} />
+          <meta name="twitter:image:alt" content={site.ogImageAlt} />
+        </>
+      )
+    }
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Als App auf dem Homescreen (iOS und Android) -->
+    <meta name="application-name" content={site.name} />
+    <meta name="apple-mobile-web-app-title" content={site.name} />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="preload" href="/assets/fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin />
+
+    {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <slot />
+    <script>
+      import '../scripts/main';
+    </script>
+  </body>
+</html>

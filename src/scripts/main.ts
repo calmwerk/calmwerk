@@ -1,0 +1,69 @@
+// Calmwerk — kleine Helfer: Menü auf dem Smartphone, Kopfzeile beim Scrollen, E-Mail kopieren, Jahr im Footer.
+
+function initMenu(): void {
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const nav = document.getElementById('nav');
+  if (!toggle || !nav) return;
+
+  const mobile = window.matchMedia('(max-width: 900px)');
+
+  const setOpen = (open: boolean): void => {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.textContent = open ? 'Schließen' : 'Menü';
+    nav.hidden = mobile.matches ? !open : false;
+  };
+
+  setOpen(false);
+  toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  nav.addEventListener('click', (event) => {
+    if (event.target instanceof Element && event.target.closest('a') && mobile.matches) setOpen(false);
+  });
+  mobile.addEventListener('change', () => setOpen(false));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setOpen(false);
+  });
+}
+
+function initHeader(): void {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+  const onScroll = (): void => {
+    header.classList.toggle('scrolled', window.scrollY > 8);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+function initCopyButtons(): void {
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const text = button.dataset.copy ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = 'kopiert';
+      } catch {
+        const range = document.createRange();
+        if (button.parentElement) range.selectNodeContents(button.parentElement);
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+        button.textContent = 'markiert';
+      }
+      window.setTimeout(() => {
+        button.textContent = 'kopieren';
+      }, 2000);
+    });
+  });
+}
+
+function initYear(): void {
+  const year = String(new Date().getFullYear());
+  document.querySelectorAll('[data-year]').forEach((el) => {
+    el.textContent = year;
+  });
+}
+
+initMenu();
+initHeader();
+initCopyButtons();
+initYear();

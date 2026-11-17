@@ -1,0 +1,36 @@
+---
+import { navigation } from '../data/site';
+
+interface Props {
+  /** 'home' zeigt die Hauptnavigation, 'simple' nur Logo und Link zur Startseite. */
+  variant?: 'home' | 'simple';
+}
+
+const { variant = 'home' } = Astro.props;
+const home = variant === 'home';
+---
+
+<header class="site-header" id={home ? 'top' : undefined}>
+  <div class="wrap">
+    <a class="brand" href={home ? '#top' : '/'} aria-label="Calmwerk, zur Startseite">
+      <img src="/assets/img/logo.svg" alt="Calmwerk" width="172" height="18" />
+    </a>
+    {
+      home ? (
+        <>
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">Menü</button>
+          <nav class="nav" id="nav" aria-label="Hauptnavigation">
+            <ul>
+              {navigation.map((item) => (
+                <li><a href={item.href}>{item.label}</a></li>
+              ))}
+            </ul>
+            <a class="btn" href="#kontakt">Erstgespräch</a>
+          </nav>
+        </>
+      ) : (
+        <a class="btn ghost compact" href="/">Zur Startseite</a>
+      )
+    }
+  </div>
+</header>

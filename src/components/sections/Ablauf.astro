@@ -1,0 +1,19 @@
+---
+import SectionHead from '../SectionHead.astro';
+import { ablauf, prinzipien } from '../../data/site';
+---
+
+<section class="section" id="ablauf" aria-labelledby="ablauf-title">
+  <div class="wrap">
+    <SectionHead label="Ablauf" titleId="ablauf-title">
+      Vom ersten Gespräch zur fertigen Website in vier Schritten.
+      <Fragment slot="lede">Eine Website dauert drei bis vier Wochen, weil bewährte Bausteine wiederverwendet werden. Sie sehen den Fortschritt jederzeit live.</Fragment>
+    </SectionHead>
+    <ol class="steps">
+      {ablauf.map((schritt) => <li><h3>{schritt.titel}</h3><p>{schritt.text}</p><span class="mono">{schritt.dauer}</span></li>)}
+    </ol>
+    <div class="principles">
+      {prinzipien.map((p) => <div><b>{p.titel}</b><p>{p.text}</p></div>)}
+    </div>
+  </div>
+</section>
