@@ -1,6 +1,7 @@
 ---
 /**
- * E-Mail-Signatur nach Markenentwurf 0.1: Logo, Messing-Linie, Name, Rolle, Kontaktzeile in Mono.
+ * E-Mail-Signatur nach Markenentwurf 0.1: Name, Rolle, Kontaktzeile in Mono, Messing-Linie, Logo.
+ * Logo unten: Werden Bilder blockiert, stehen Name und Kontakt trotzdem zuerst.
  * Nur Inline-Styles und Tabellen – E-Mail-Programme ignorieren Stylesheets und laden keine Webfonts.
  * Nicht in Suchmaschinen und nicht in der Sitemap.
  */
@@ -19,7 +20,7 @@ const mono = "Menlo, Consolas, 'Courier New', monospace";
 // Alte HTML-Attribute, die Outlook für die Messing-Linie braucht (TypeScript kennt sie nicht mehr).
 const outlookRule = { width: '48', height: '1', bgcolor: '#A6895B' };
 
-const textVersion = `${site.founder.name}\n${rolle}\n${site.name}\n${site.email} · ${domain} · ${site.address.locality}`;
+const textVersion = `${site.founder.name}\n${rolle}\n${site.email} · ${domain} · ${site.address.locality}\n${site.name}`;
 ---
 
 <LegalLayout title="E-Mail-Signatur – Calmwerk" description="E-Mail-Signatur von Calmwerk zum Kopieren." canonical={false}>
@@ -31,8 +32,14 @@ const textVersion = `${site.founder.name}\n${rolle}\n${site.name}\n${site.email}
     <div id="signatur">
       <table cellpadding="0" cellspacing="0" border="0" role="presentation" style={`border-collapse:collapse;font-family:${sans};color:#111316;`}>
         <tr>
-          <td style="padding:0 0 14px 0;">
-            <a href={website} style="text-decoration:none;border:0;"><img src={logo} width="210" height="22" alt="Calmwerk" style="display:block;border:0;width:210px;height:22px;" /></a>
+          <td style={`font-family:${sans};font-size:14px;line-height:20px;font-weight:bold;color:#111316;`}>{site.founder.name}</td>
+        </tr>
+        <tr>
+          <td style={`padding:0 0 10px 0;font-family:${sans};font-size:13px;line-height:19px;color:#6E747A;`}>{rolle}</td>
+        </tr>
+        <tr>
+          <td style={`padding:0 0 14px 0;font-family:${mono};font-size:12px;line-height:18px;color:#2B3036;`}>
+            <a href={`mailto:${site.email}`} style="color:#2B3036;text-decoration:none;">{site.email}</a> · <a href={website} style="color:#2B3036;text-decoration:none;">{domain}</a> · {site.address.locality}
           </td>
         </tr>
         <tr>
@@ -43,14 +50,8 @@ const textVersion = `${site.founder.name}\n${rolle}\n${site.name}\n${site.email}
           </td>
         </tr>
         <tr>
-          <td style={`font-family:${sans};font-size:14px;line-height:20px;font-weight:bold;color:#111316;`}>{site.founder.name}</td>
-        </tr>
-        <tr>
-          <td style={`padding:0 0 10px 0;font-family:${sans};font-size:13px;line-height:19px;color:#6E747A;`}>{rolle}</td>
-        </tr>
-        <tr>
-          <td style={`font-family:${mono};font-size:12px;line-height:18px;color:#2B3036;`}>
-            <a href={`mailto:${site.email}`} style="color:#2B3036;text-decoration:none;">{site.email}</a> · <a href={website} style="color:#2B3036;text-decoration:none;">{domain}</a> · {site.address.locality}
+          <td>
+            <a href={website} style="text-decoration:none;border:0;"><img src={logo} width="168" height="18" alt="Calmwerk" style="display:block;border:0;width:168px;height:18px;" /></a>
           </td>
         </tr>
       </table>
