@@ -1,0 +1,114 @@
+---
+/**
+ * Digitale Visitenkarte: calmwerk.de/karte
+ * Fürs Handy gebaut – zum Zeigen (QR-Code scannen lassen), Teilen per Link und „Kontakt speichern“.
+ * Nicht in der Navigation, nicht in Suchmaschinen.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+import { absoluteUrl, withBase } from '../lib/url';
+
+const rolle = 'Websites · Shops · Automatisierung';
+const website = absoluteUrl();
+const domain = new URL(website).host;
+const karteUrl = absoluteUrl('karte');
+
+const [vorname, ...rest] = site.founder.name.split(' ');
+const esc = (v: string) => v.replace(/[\;,]/g, (c) => `\\${c}`);
+// vCard 3.0 – wird erst beim Tippen auf „Kontakt speichern“ als Datei erzeugt.
+const vcard = [
+  'BEGIN:VCARD',
+  'VERSION:3.0',
+  `N:${esc(rest.join(' '))};${esc(vorname)};;;`,
+  `FN:${esc(site.founder.name)}`,
+  `ORG:${esc(site.name)}`,
+  `TITLE:${esc(rolle)}`,
+  `EMAIL;TYPE=INTERNET,WORK:${site.email}`,
+  `TEL;TYPE=CELL,VOICE:${site.phoneE164}`,
+  `URL:${website}`,
+  `ADR;TYPE=WORK:;;${esc(site.address.street)};${esc(site.address.locality)};${esc(site.address.region)};${site.address.postalCode};Deutschland`,
+  'END:VCARD',
+  '',
+].join('\r\n');
+---
+
+<BaseLayout title={`${site.founder.name} – ${site.name}`} description={`Digitale Visitenkarte von ${site.founder.name}, ${site.name}.`} noindex>
+  <main class="vk">
+    <section class="vk-card" aria-label="Visitenkarte">
+      <div class="vk-front">
+        <img src={withBase('assets/img/logo-negativ.svg')} alt="Calmwerk" class="vk-logo" width="230" height="24" />
+        <span class="vk-rule" aria-hidden="true"></span>
+      </div>
+      <div class="vk-back">
+        <h1>{site.founder.name}</h1>
+        <p class="vk-role">{rolle}</p>
+        <p class="vk-meta">
+          <a href={`mailto:${site.email}`}>{site.email}</a><br />
+          <a href={`tel:${site.phoneE164}`}>{site.phone}</a><br />
+          <a href={website}>{domain}</a> · {site.address.locality}
+        </p>
+      </div>
+    </section>
+
+    <nav class="vk-actions" aria-label="Kontakt">
+      <button type="button" class="btn vk-save" id="vk-save" hidden>Kontakt speichern</button>
+      <a class="vk-btn" href={`tel:${site.phoneE164}`}>Anrufen</a>
+      <a class="vk-btn" href={`mailto:${site.email}`}>E-Mail</a>
+      <a class="vk-btn" href={website}>Website</a>
+      <button type="button" class="vk-btn" id="vk-share" hidden>Teilen</button>
+    </nav>
+
+    <figure class="vk-qr">
+      <img src={withBase('assets/img/karte-qr.svg')} alt={`QR-Code zu ${karteUrl.replace(/^https?:\/\//, '')}`} width="180" height="180" />
+      <figcaption>Scannen, um diese Karte zu öffnen</figcaption>
+    </figure>
+  </main>
+
+  <script type="application/json" id="vk-data" set:html={JSON.stringify({ vcard, name: site.founder.name, url: karteUrl })} />
+</BaseLayout>
+
+<style is:global>
+  body:has(.vk) { background: var(--paper); }
+  .vk { max-width: 440px; margin: 0 auto; padding: max(24px, env(safe-area-inset-top)) var(--gutter) max(40px, env(safe-area-inset-bottom)); display: grid; gap: 24px; }
+  .vk-card { border-radius: 14px; overflow: hidden; box-shadow: 0 1px 2px rgb(17 19 22 / .06), 0 12px 32px rgb(17 19 22 / .10); }
+  .vk-front { background: var(--ink); aspect-ratio: 85 / 40; display: grid; place-items: center; position: relative; }
+  .vk-logo { width: 54%; height: auto; }
+  .vk-rule { position: absolute; left: 8%; right: 8%; bottom: 16%; height: 1px; background: var(--brass); }
+  .vk-back { background: var(--white); padding: 26px 26px 28px; }
+  .vk-back h1 { margin: 0; font: 600 1.5rem/1.2 var(--f-text); letter-spacing: -0.01em; color: var(--ink); }
+  .vk-role { margin: 4px 0 22px; color: var(--stone); }
+  .vk-meta { margin: 0; font: 400 0.9rem/1.85 var(--f-mono); color: var(--graphite); }
+  .vk-meta a { color: inherit; text-decoration: none; }
+  .vk-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .vk-actions .vk-save { grid-column: 1 / -1; justify-content: center; min-height: 48px; border-radius: 999px; }
+  .vk-btn { display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 16px; border: 1px solid var(--hair); border-radius: 999px; background: var(--white); color: var(--ink); font: 500 0.95rem var(--f-text); text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .vk-btn:active { background: var(--mark); }
+  .vk-qr { margin: 8px 0 0; display: grid; justify-items: center; gap: 10px; }
+  .vk-qr img { width: 180px; height: 180px; padding: 14px; background: var(--white); border-radius: 12px; }
+  .vk-qr figcaption { font: 400 0.8rem var(--f-mono); color: var(--stone); }
+</style>
+
+<script>
+  const data = JSON.parse(document.getElementById('vk-data')?.textContent ?? '{}') as { vcard: string; name: string; url: string };
+  const save = document.getElementById('vk-save');
+  const share = document.getElementById('vk-share');
+
+  if (save && data.vcard) {
+    save.hidden = false;
+    save.addEventListener('click', () => {
+      const file = new Blob([data.vcard], { type: 'text/vcard;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(file);
+      link.download = `${data.name}.vcf`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    });
+  }
+
+  if (share && 'share' in navigator) {
+    share.hidden = false;
+    share.addEventListener('click', () => {
+      navigator.share({ title: data.name, url: data.url }).catch(() => {});
+    });
+  }
+</script>
