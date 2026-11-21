@@ -19,9 +19,16 @@ hinter dem Logo würde im Dunkelmodus als Kasten erscheinen.
 
 ## Für weitere Personen
 
-In `signatur.html` drei Stellen ändern: Name, Rolle und E-Mail-Adresse (zweimal: im `href="mailto:…"` und im sichtbaren Text).
+In `signatur.html` ändern: Name, Rolle, E-Mail-Adresse und Telefon (die beiden letzten jeweils zweimal: im Link `mailto:…` bzw. `tel:…` und im sichtbaren Text).
 Alles andere bleibt gleich. E-Mail-Programme ignorieren Stylesheets und laden keine Webfonts,
 deshalb stehen alle Angaben als Inline-Styles in Tabellen.
+
+## Gestaltung
+
+- Größen passend zum Mailtext auf dem Smartphone (17 px): Name 17 px fett, Rolle 15 px, Kontakt 14 px.
+- Kontakt untereinander wie auf der Visitenkarte, damit auf dem Handy nichts mitten in der Zeile umbricht.
+- Schriftart steht zusätzlich an jedem Text (`span`/`a`), weil manche Mailprogramme sie an Tabellenzellen entfernen.
+- Farben dunkel genug, dass iOS und Outlook sie im Dunkelmodus hell und gut lesbar umrechnen.
 
 ## Einrichten
 
@@ -39,6 +46,7 @@ deshalb stehen alle Angaben als Inline-Styles in Tabellen.
 ```
 Philipp Kremer
 Websites · Shops · Automatisierung
-philipp.kremer@calmwerk.de · calmwerk.de · Karlsruhe
-Calmwerk
+philipp.kremer@calmwerk.de
++49 163 7285172
+calmwerk.de · Karlsruhe
 ```
