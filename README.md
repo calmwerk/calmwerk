@@ -65,7 +65,7 @@ Netlify oder Cloudflare Pages gehen genauso: Build-Befehl `npm run build`, Ausga
 
 ## Vor dem Livegang
 
-- [ ] Domain `calmwerk.de` registrieren, E-Mail-Postfach `philipp@calmwerk.de` einrichten
+- [ ] Domain `calmwerk.de` registrieren, E-Mail-Postfach `philipp.kremer@calmwerk.de` einrichten
 - [ ] Impressum und Datenschutzerklärung rechtlich prüfen lassen (Hosting-Absatz ist auf GitHub Pages ausgelegt; bei einem anderen Hoster anpassen)
 - [x] Anschrift und Telefon in Impressum, Datenschutz und `src/data/site.ts`
 - [x] Freigabe der Referenzkunden (MOVE ON Studio 76, Arte Sacra Studios, JD Cosmetics) für Namen und Bilder
