@@ -13,6 +13,10 @@ Das Logo wird von `https://calmwerk.de/assets/img/signatur-logo.png` geladen. Di
 `public/assets/img/signatur-logo.png` darf deshalb nicht gelöscht oder umbenannt werden,
 sonst fehlt das Logo in allen bereits versendeten und künftigen Mails.
 
+Das Logo ist ein transparentes PNG in Grau (#7A8087) mit Messing-Akzent, damit es auf hellem und
+dunklem Hintergrund (Dunkelmodus in iOS-Mail, Outlook, Zoho) gleich gut lesbar ist. Eine weiße Fläche
+hinter dem Logo würde im Dunkelmodus als Kasten erscheinen.
+
 ## Für weitere Personen
 
 In `signatur.html` drei Stellen ändern: Name, Rolle und E-Mail-Adresse (zweimal: im `href="mailto:…"` und im sichtbaren Text).
