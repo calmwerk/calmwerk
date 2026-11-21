@@ -32,7 +32,7 @@ const vcard = [
 ].join('\r\n');
 ---
 
-<BaseLayout title={`${site.founder.name} – ${site.name}`} description={`Digitale Visitenkarte von ${site.founder.name}, ${site.name}.`} noindex>
+<BaseLayout title={`${site.founder.name} – ${site.name}`} description={`Digitale Visitenkarte von ${site.founder.name}, ${site.name}.`} noindex manifest="karte.webmanifest" appTitle="Visitenkarte">
   <main class="vk">
     <section class="vk-card" aria-label="Visitenkarte">
       <div class="vk-front">

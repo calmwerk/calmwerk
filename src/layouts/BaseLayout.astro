@@ -16,9 +16,13 @@ interface Props {
   canonical?: boolean;
   /** Strukturierte Daten (schema.org) als Objekt. */
   jsonLd?: object;
+  /** Eigenes Web-Manifest (z. B. damit „Zum Home-Bildschirm“ diese Seite statt der Startseite öffnet). */
+  manifest?: string;
+  /** Name unter dem Icon auf dem Home-Bildschirm. */
+  appTitle?: string;
 }
 
-const { title, description, socialTitle = title, noindex = false, canonical = true, jsonLd } = Astro.props;
+const { title, description, socialTitle = title, noindex = false, canonical = true, jsonLd, manifest = 'site.webmanifest', appTitle = site.name } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname.replace(/index\.html$/, ''), Astro.site).href;
 const ogImage = absoluteUrl(site.ogImage);
@@ -68,11 +72,11 @@ const ogImage = absoluteUrl(site.ogImage);
     <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
     <link rel="icon" href={withBase('favicon-32.png')} sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href={withBase('apple-touch-icon.png')} sizes="180x180" />
-    <link rel="manifest" href={withBase('site.webmanifest')} />
+    <link rel="manifest" href={withBase(manifest)} />
 
     <!-- Als App auf dem Homescreen (iOS und Android) -->
-    <meta name="application-name" content={site.name} />
-    <meta name="apple-mobile-web-app-title" content={site.name} />
+    <meta name="application-name" content={appTitle} />
+    <meta name="apple-mobile-web-app-title" content={appTitle} />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
