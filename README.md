@@ -27,10 +27,11 @@ npm run preview    # gebaute Seite lokal ansehen
 | `src/components/` | Kopfzeile, Fußzeile, Abschnittsüberschrift |
 | `src/layouts/BaseLayout.astro` | Gemeinsamer `<head>`: Titel, Beschreibung, Canonical, Social-Media-Vorschau, Icons, strukturierte Daten |
 | `src/layouts/LegalLayout.astro` | Rahmen für Impressum, Datenschutz und 404 (`noindex`) |
-| `src/pages/` | Seiten: `index`, `impressum`, `datenschutz`, `404`, `signatur` (E-Mail-Signatur zum Kopieren, `noindex`) |
+| `src/pages/` | Seiten: `index`, `impressum`, `datenschutz`, `404` |
 | `src/lib/schema.ts` | Strukturierte Daten (schema.org) für Google, aus `site.ts` erzeugt |
 | `src/styles/global.css` | Gestaltung nach Markenentwurf 0.1 (Farben, Schriften, Abstände) |
 | `src/scripts/main.ts` | Menü auf dem Smartphone, Kopfzeile beim Scrollen, E-Mail kopieren |
+| `vorlagen/email-signatur/` | E-Mail-Signatur als HTML-Vorlage mit Anleitung (nicht Teil der Website). Braucht `public/assets/img/signatur-logo.png`. |
 | `src/lib/url.ts` | `withBase()` und `absoluteUrl()`: alle Links und Dateipfade passen sich dem Veröffentlichungsort an |
 | `src/assets/fonts/` | Schriften; werden beim Build mit Hash im Dateinamen ausgeliefert |
 | `public/` | Wird unverändert ausgeliefert: Favicons, Web-Manifest, Logo, Vorschaubild |
