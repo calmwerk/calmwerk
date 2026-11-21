@@ -8,7 +8,7 @@ const site = process.env.SITE_URL || 'https://calmwerk.de';
 const base = process.env.BASE_PATH || '/';
 
 // Seiten, die nicht in die Sitemap gehören (stehen auf noindex).
-const NOINDEX = ['impressum', 'datenschutz', '404'];
+const NOINDEX = ['impressum', 'datenschutz', '404', 'kontakt.vcf'];
 
 export default defineConfig({
   site,
