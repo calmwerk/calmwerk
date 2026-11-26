@@ -1,15 +1,18 @@
 name: GitHub-Release
 
 # Legt zu jedem Versions-Tag (v1.0.0, v2.0.0 …) ein Release mit automatischen Notizen an.
-# Für Tags, die vor diesem Workflow entstanden sind: manuell starten und den Tag angeben.
+# Manuell starten: Tag und optional den Commit angeben; fehlt der Tag, legt GitHub ihn auf diesem Commit an.
 on:
   push:
     tags: ['v*']
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Vorhandener Tag, z. B. v1.0.0'
+        description: 'Tag, z. B. v1.0.0'
         required: true
+      target:
+        description: 'Commit für einen neuen Tag (leer = aktueller Stand von main)'
+        required: false
 
 permissions:
   contents: write
@@ -22,9 +25,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ inputs.tag || github.ref_name }}
+          TARGET: ${{ inputs.target || github.sha }}
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "Release $TAG gibt es schon."
           else
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --title "Calmwerk $TAG" --generate-notes
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$TARGET" --title "Calmwerk $TAG" --generate-notes
           fi
