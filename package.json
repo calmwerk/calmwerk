@@ -1,7 +1,7 @@
 {
   "name": "calmwerk",
   "type": "module",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "description": "Firmenwebsite von Calmwerk – Websites, Shops und Automatisierung in Karlsruhe.",
   "engines": {

@@ -1,0 +1,99 @@
+---
+/**
+ * Projektübersicht als laufende Reihe: Kundenreferenzen und eigene Projekte.
+ * Antippen öffnet die Seite in einem Dialog. Ohne JavaScript oder mit „Bewegung reduzieren“
+ * stehen die Reihen still und lassen sich seitlich scrollen.
+ */
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import { eigeneProjekte } from '../data/showcase';
+
+const referenzen = (await getCollection('referenzen', ({ data }) => data.published)).sort((a, b) => a.data.order - b.data.order);
+
+interface Eintrag {
+  id: string;
+  art: 'Referenz' | 'Eigenes Projekt';
+  name: string;
+  branche: string;
+  ort?: string;
+  bild: ImageMetadata;
+  bildAlt: string;
+  text: string;
+  liste: [string, string][];
+}
+
+const kundenprojekte: Eintrag[] = referenzen.map((r) => ({
+    id: `ref-${r.id}`,
+    art: 'Referenz' as const,
+    name: r.data.title,
+    branche: r.data.branche,
+    ort: r.data.ort,
+    bild: r.data.image,
+    bildAlt: r.data.imageAlt,
+    text: (r.body ?? '').trim(),
+    liste: [['Umfang', r.data.umfang], ['Fokus', r.data.fokus]] as [string, string][],
+  }));
+const eigene: Eintrag[] = eigeneProjekte.map((e) => ({
+  id: `eigen-${e.id}`,
+  art: 'Eigenes Projekt' as const,
+  name: e.name,
+  branche: e.art,
+  bild: e.bild,
+  bildAlt: e.screenshot ? `Bildschirmfoto von ${e.name}` : `Projektkarte ${e.name}`,
+  text: e.text,
+  liste: [['Technik', e.technik]] as [string, string][],
+}));
+const eintraege: Eintrag[] = [...kundenprojekte, ...eigene];
+// Genug Kopien, damit die Reihe auch auf breiten Bildschirmen lückenlos läuft (eine Kopie ≈ 440 px je Kachel).
+const kopien = Math.max(2, Math.ceil(2400 / (eintraege.length * 440)) + 1);
+---
+
+<div class="showcase" id="referenzen" aria-label="Projekte">
+  <div class="marquee">
+    <div class="track" style={`--copies:${kopien}`}>
+      {Array.from({ length: kopien }, (_, kopie) => kopie).map((kopie) =>
+        eintraege.map((e) => (
+          <button
+            class="tile"
+            type="button"
+            data-open={`sc-${e.id}`}
+            aria-hidden={kopie > 0 ? 'true' : undefined}
+            tabindex={kopie > 0 ? -1 : undefined}
+            aria-label={kopie === 0 ? `${e.art}: ${e.name}, ${e.branche} – ansehen` : undefined}
+          >
+            <Image src={e.bild} alt="" widths={[420, 840]} sizes="420px" loading="lazy" />
+            <span class="tile-tag mono">{e.art}</span>
+          </button>
+        )),
+      )}
+    </div>
+  </div>
+  <p class="showcase-note mono">Antippen für Details</p>
+
+  {
+    eintraege.map((e) => (
+      <dialog class="sc-dialog" id={`sc-${e.id}`} aria-labelledby={`sc-${e.id}-title`}>
+        <div class="sc-head">
+          <div>
+            <p class="label">{e.art} · {e.branche}{e.ort ? ` · ${e.ort}` : ''}</p>
+            <h3 id={`sc-${e.id}-title`}>{e.name}</h3>
+          </div>
+          <button class="sc-close" type="button" data-close aria-label="Schließen">Schließen</button>
+        </div>
+        <div class="sc-body">
+          <div class="sc-shot">
+            <Image src={e.bild} alt={e.bildAlt} widths={[720, 1100, 1440]} sizes="(max-width: 1140px) 94vw, 1100px" loading="lazy" />
+          </div>
+          <div class="sc-info">
+            <p>{e.text}</p>
+            <dl>
+              {e.liste.map(([k, v]) => <><dt>{k}</dt><dd>{v}</dd></>)}
+            </dl>
+            {e.art === 'Eigenes Projekt' && <p class="mono">Für den eigenen Gebrauch gebaut. Dieselbe Technik steckt in Kundenprojekten.</p>}
+            <a class="btn" href="#kontakt" data-close>{e.art === 'Eigenes Projekt' ? 'Über ein Projekt sprechen' : 'So eine Website für meinen Betrieb'} <span class="arrow" aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </dialog>
+    ))
+  }
+</div>

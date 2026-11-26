@@ -84,8 +84,27 @@ function initMarks(): void {
   marks.forEach((mark) => observer.observe(mark));
 }
 
+/** Projektübersicht: Kachel öffnet den passenden Dialog; Schließen-Knopf, Klick daneben und Esc schließen ihn. */
+function initShowcase(): void {
+  document.querySelectorAll<HTMLButtonElement>('[data-open]').forEach((tile) => {
+    tile.addEventListener('click', () => {
+      const dialog = document.getElementById(tile.dataset.open ?? '');
+      if (dialog instanceof HTMLDialogElement) {
+        dialog.showModal();
+        dialog.querySelector('.sc-body')?.scrollTo(0, 0);
+      }
+    });
+  });
+  document.querySelectorAll<HTMLDialogElement>('.sc-dialog').forEach((dialog) => {
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog || (event.target instanceof Element && event.target.closest('[data-close]'))) dialog.close();
+    });
+  });
+}
+
 initMenu();
 initHeader();
 initCopyButtons();
 initYear();
 initMarks();
+initShowcase();
