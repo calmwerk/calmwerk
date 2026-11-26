@@ -3,6 +3,7 @@ title: Arte Sacra Studios
 branche: Modelabel
 ort: Karlsruhe
 order: 2
+published: false
 image: ../../assets/referenzen/artesacra.jpg
 imageAlt: Shopify-Shop von Arte Sacra Studios auf Desktop und Smartphone
 umfang: Theme mit Liquid, CSS und JavaScript

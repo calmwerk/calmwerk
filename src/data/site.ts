@@ -138,9 +138,9 @@ export const fakten: [string, string][] = [
 ];
 
 export const navigation = [
-  { href: '#leistungen', label: 'Leistungen' },
-  { href: '#preise', label: 'Preise' },
   { href: '#referenzen', label: 'Referenzen' },
+  { href: '#preise', label: 'Preise' },
+  { href: '#leistungen', label: 'Leistungen' },
   { href: '#ablauf', label: 'Ablauf' },
   { href: '#ueber', label: 'Über mich' },
 ];

@@ -1,7 +1,17 @@
 ---
 import SectionHead from '../SectionHead.astro';
 import { betreuung, pakete, zahlungshinweis } from '../../data/site';
-import { formatEuro, formatMonat } from '../../lib/format';
+import { formatEuro } from '../../lib/format';
+
+// Drei Karten für den schnellen Überblick, alles Weitere als Liste darunter.
+const [start, business, ...weitere] = pakete;
+const [care, ...mehrBetreuung] = betreuung;
+
+const karten = [
+  { label: start!.name, preis: start!.preis, ab: start!.ab, zusatz: 'einmalig', punkte: start!.inhalt.split(', '), dauer: start!.dauer, beliebt: false },
+  { label: business!.name, preis: business!.preis, ab: business!.ab, zusatz: 'einmalig', punkte: business!.inhalt.split(', '), dauer: business!.dauer, beliebt: true },
+  { label: `Betreuung · ${care!.name}`, preis: care!.preis, ab: care!.ab, zusatz: 'pro Monat', punkte: care!.text.replace(/\.$/, '').split(', '), dauer: 'monatlich kündbar', beliebt: false },
+];
 ---
 
 <section class="section" id="preise" aria-labelledby="preise-title">
@@ -10,36 +20,31 @@ import { formatEuro, formatMonat } from '../../lib/format';
       Feste Pakete, feste Preise.
       <Fragment slot="lede">Sie wissen vorher, <mark>was es kostet und wann es fertig ist</mark>. Nach dem Erstgespräch erhalten Sie ein Festpreisangebot.</Fragment>
     </SectionHead>
-    <div class="price-wrap">
-      <table class="price-table">
-        <thead>
-          <tr><th scope="col">Paket</th><th scope="col">Inhalt</th><th scope="col">Dauer</th><th scope="col" class="num">Preis</th></tr>
-        </thead>
-        <tbody>
-          {
-            pakete.map((paket) => (
-              <tr>
-                <td>{paket.name}</td>
-                <td class="desc">{paket.inhalt}</td>
-                <td class="dur">{paket.dauer}</td>
-                <td class="num">{formatEuro(paket.preis, paket.ab)}</td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
-    </div>
 
-    <div class="care" aria-label="Betreuung">
+    <div class="plans">
       {
-        betreuung.map((b) => (
-          <div>
-            <b>{b.name}</b>
-            <span class="price">{formatMonat(b.preis, b.ab)}</span>
-            <p>{b.text}</p>
-          </div>
+        karten.map((k) => (
+          <article class:list={['plan', { featured: k.beliebt }]}>
+            {k.beliebt && <span class="plan-badge mono">Beliebt</span>}
+            <p class="label">{k.label}</p>
+            <p class="plan-price">
+              {k.ab && <span class="plan-ab">ab</span>}
+              {formatEuro(k.preis)}
+            </p>
+            <p class="mono">{k.zusatz} · {k.dauer}</p>
+            <ul>{k.punkte.map((p) => <li>{p}</li>)}</ul>
+            <a class:list={['btn', { ghost: !k.beliebt }]} href="#kontakt">Anfragen</a>
+          </article>
         ))
       }
+    </div>
+
+    <div class="more-plans">
+      <p class="label">Weitere Pakete</p>
+      <ul>
+        {weitere.map((p) => <li><b>{p.name}</b><span>{p.inhalt}</span><span class="mono">{formatEuro(p.preis, p.ab)}</span></li>)}
+        {mehrBetreuung.map((b) => <li><b>{b.name}</b><span>{b.text}</span><span class="mono">{formatEuro(b.preis, b.ab)} / Monat</span></li>)}
+      </ul>
     </div>
     <p class="mono note">{zahlungshinweis}</p>
   </div>

@@ -7,26 +7,37 @@ import { fakten, site } from '../../data/site';
 const ueber = await getEntry('ueber', 'philipp-kremer');
 if (!ueber) throw new Error('src/content/ueber/philipp-kremer.md fehlt');
 const { foto, fotoAlt, einleitung, text, markierung } = ueber.data;
+
+// Drei Zahlen, die auf einen Blick zeigen, wie Calmwerk arbeitet.
+const zahlen: [string, string][] = [
+  ['8 Jahre', 'Softwareentwicklung'],
+  ['1', 'Ansprechpartner von Anfang bis Ende'],
+  ['3–4 Wo.', 'bis Ihre Website online ist'],
+];
 ---
 
-<!-- Foto | Überschrift und Text | Eckdaten; ohne Foto: Text | Eckdaten -->
+<!-- Großes Foto links, rechts Text, drei Zahlen und Eckdaten. -->
 <section class="section" id="ueber" aria-labelledby="ueber-title">
   <div class="wrap">
-    <div class:list={['about', { 'has-portrait': foto }]}>
+    <div class:list={['about-split', { 'no-portrait': !foto }]}>
       {
         foto && (
           <figure class="portrait">
-            <Image src={foto} alt={fotoAlt} widths={[320, 480, 640]} sizes="(max-width: 860px) 320px, 290px" loading="lazy" />
+            <Image src={foto} alt={fotoAlt} widths={[400, 640, 900]} sizes="(max-width: 860px) 92vw, 460px" loading="lazy" />
           </figure>
         )
       }
       <div class="about-body">
-        <h2 id="ueber-title">{site.founder.name},<br />{site.founder.jobTitle}<br />von {site.name}.</h2>
+        <p class="label">Über mich</p>
+        <h2 id="ueber-title">{site.founder.name}. Ein Ansprechpartner, von der Idee bis online.</h2>
         <p class="lede">{einleitung}</p>
         <p class="about-text"><MarkedText text={text} markierung={markierung} /></p>
-      </div>
-      <div class="facts">
-        {fakten.map(([key, value]) => <div><span>{key}</span><span>{value}</span></div>)}
+        <div class="stats">
+          {zahlen.map(([wert, text]) => <div><b>{wert}</b><span>{text}</span></div>)}
+        </div>
+        <div class="facts">
+          {fakten.map(([key, value]) => <div><span>{key}</span><span>{value}</span></div>)}
+        </div>
       </div>
     </div>
   </div>
