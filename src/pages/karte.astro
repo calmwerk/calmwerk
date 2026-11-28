@@ -7,6 +7,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 import { absoluteUrl, withBase } from '../lib/url';
+import Email from '../components/Email.astro';
 
 const rolle = 'Websites · Shops · Automatisierung';
 const website = absoluteUrl();
@@ -43,7 +44,7 @@ const vcard = [
         <h1>{site.founder.name}</h1>
         <p class="vk-role">{rolle}</p>
         <p class="vk-meta">
-          <a href={`mailto:${site.email}`}>{site.email}</a><br />
+          <Email /><br />
           <a href={`tel:${site.phoneE164}`}>{site.phone}</a><br />
           <a href={website}>{domain}</a> · {site.address.locality}
         </p>
@@ -53,7 +54,7 @@ const vcard = [
     <nav class="vk-actions" aria-label="Kontakt">
       <button type="button" class="btn vk-save" id="vk-save" hidden>Kontakt speichern</button>
       <a class="vk-btn" href={`tel:${site.phoneE164}`}>Anrufen</a>
-      <a class="vk-btn" href={`mailto:${site.email}`}>E-Mail</a>
+      <Email class="vk-btn">E-Mail</Email>
       <a class="vk-btn" href={website}>Website</a>
       <button type="button" class="vk-btn" id="vk-share" hidden>Teilen</button>
     </nav>
@@ -64,7 +65,7 @@ const vcard = [
     </figure>
   </main>
 
-  <script type="application/json" id="vk-data" set:html={JSON.stringify({ vcard, name: site.founder.name, url: karteUrl })} />
+  <script type="application/json" id="vk-data" set:html={JSON.stringify({ vcard: Buffer.from(vcard, 'utf8').toString('base64'), name: site.founder.name, url: karteUrl })} />
 </BaseLayout>
 
 <style is:global>
@@ -96,7 +97,9 @@ const vcard = [
   if (save && data.vcard) {
     save.hidden = false;
     save.addEventListener('click', () => {
-      const file = new Blob([data.vcard], { type: 'text/vcard;charset=utf-8' });
+      // Die vCard liegt Base64-kodiert in der Seite, damit Adress-Sammler die E-Mail nicht finden.
+      const text = new TextDecoder().decode(Uint8Array.from(atob(data.vcard), (c) => c.charCodeAt(0)));
+      const file = new Blob([text], { type: 'text/vcard;charset=utf-8' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(file);
       link.download = `${data.name}.vcf`;

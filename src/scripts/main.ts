@@ -102,6 +102,22 @@ function initShowcase(): void {
   });
 }
 
+/** E-Mail-Adressen zusammensetzen (siehe Email.astro): Text, mailto-Link und Kopier-Knöpfe. */
+function initMail(): void {
+  const decode = (value: string): string => [...atob(value)].reverse().join('');
+  let adresse = '';
+  document.querySelectorAll<HTMLAnchorElement>('a[data-m]').forEach((link) => {
+    adresse = decode(link.dataset.m ?? '');
+    if (link.dataset.keep === undefined) link.textContent = adresse;
+    const betreff = link.dataset.subject ? `?subject=${encodeURIComponent(link.dataset.subject)}` : '';
+    link.href = `mailto:${adresse}${betreff}`;
+  });
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-m]').forEach((button) => {
+    button.dataset.copy = adresse;
+  });
+}
+
+initMail();
 initMenu();
 initHeader();
 initCopyButtons();

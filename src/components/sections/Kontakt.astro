@@ -2,9 +2,9 @@
 import { Image } from 'astro:assets';
 import { getEntry } from 'astro:content';
 import { site } from '../../data/site';
+import Email from '../Email.astro';
 
 const foto = (await getEntry('ueber', 'philipp-kremer'))?.data.foto;
-const mailto = `mailto:${site.email}?subject=${encodeURIComponent(`Erstgespräch ${site.name}`)}`;
 ---
 
 <!-- Großer, mittiger Abschluss: eine Aussage, zwei Wege, die Adresse zum Kopieren. -->
@@ -14,10 +14,10 @@ const mailto = `mailto:${site.email}?subject=${encodeURIComponent(`Erstgespräch
     <h2 id="kontakt-title">Lassen Sie uns über Ihre Website sprechen.</h2>
     <p class="lede">Kostenloses Erstgespräch, 30 Minuten, vor Ort in Karlsruhe oder online. Antwort innerhalb eines Werktags.</p>
     <div class="ctas">
-      <a class="btn light" href={mailto}>E-Mail schreiben <span class="arrow" aria-hidden="true">→</span></a>
+      <Email class="btn light" subject={`Erstgespräch ${site.name}`}>E-Mail schreiben <span class="arrow" aria-hidden="true">→</span></Email>
       <a class="btn ghost-light" href={`tel:${site.phoneE164}`}>{site.phone}</a>
     </div>
-    <p class="contact-mail">{site.email} · <button class="copy" type="button" data-copy={site.email}>kopieren</button></p>
+    <p class="contact-mail"><Email /> · <button class="copy" type="button" data-copy-m>kopieren</button></p>
     <div class="contact-person">
       {foto && <Image src={foto} alt="" width={112} height={112} fit="cover" position="top" loading="lazy" />}
       <p><b>Sie schreiben direkt mir.</b><span>{site.founder.name}, {site.founder.jobTitle}</span></p>
