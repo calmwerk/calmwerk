@@ -1,6 +1,7 @@
 ---
 import LegalLayout from '../layouts/LegalLayout.astro';
 import { site } from '../data/site';
+import Email from '../components/Email.astro';
 ---
 
 <LegalLayout title="Impressum – Calmwerk" description="Impressum von Calmwerk – Philipp Kremer, Karlsruhe: Anbieterkennzeichnung und Kontakt.">
@@ -15,7 +16,7 @@ import { site } from '../data/site';
 
   <h2>Kontakt</h2>
   <p>
-    E-Mail: {site.email}<br />
+    E-Mail: <Email /><br />
     Telefon: {site.phone}
   </p>
 

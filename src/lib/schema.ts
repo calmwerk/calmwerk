@@ -21,7 +21,6 @@ export function startseiteSchema() {
         slogan: site.claim,
         description: site.shortDescription,
         url: `${base}/`,
-        email: site.email,
         telephone: site.phoneE164,
         logo: `${base}/assets/img/icon-512.png`,
         image: absoluteUrl(site.ogImage),

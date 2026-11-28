@@ -1,0 +1,24 @@
+---
+/**
+ * E-Mail-Adresse, die Adress-Sammler nicht im HTML finden.
+ * Im Quelltext steht die Adresse nur rückwärts und Base64-kodiert; src/scripts/main.ts setzt
+ * Text und mailto-Link beim Laden zusammen. Ohne JavaScript steht lesbar „name [at] domain“ da,
+ * damit Impressum und Kontakt für Menschen immer vollständig sind.
+ */
+import { site } from '../data/site';
+
+interface Props {
+  /** Betreff für den mailto-Link. */
+  subject?: string;
+  class?: string;
+}
+
+const { subject, class: className } = Astro.props;
+const [user, domain] = site.email.split('@');
+const kodiert = Buffer.from([...site.email].reverse().join(''), 'utf8').toString('base64');
+const hatInhalt = Astro.slots.has('default');
+---
+
+<a class={className} data-m={kodiert} data-subject={subject} data-keep={hatInhalt ? '' : undefined}>
+  {hatInhalt ? <slot /> : `${user} [at] ${domain}`}
+</a>
